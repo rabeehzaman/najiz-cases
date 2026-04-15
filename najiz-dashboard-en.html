@@ -406,6 +406,80 @@ body {
 }
 .attachment-content th { background: var(--surface-alt); font-weight: 600; }
 
+/* VEHICLE DETAILS */
+.vehicle-details {
+  background: linear-gradient(135deg, #f0f5fa, #e8eff8);
+  border: 1px solid #b0c8e0;
+  border-radius: 6px;
+  padding: 14px;
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+.vehicle-details h4 {
+  font-size: 0.85rem;
+  color: #2a4a6a;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+.vehicle-item {
+  background: var(--surface);
+  border: 1px solid #c0d4e8;
+  border-radius: 5px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  font-size: 0.8rem;
+}
+.vehicle-item:last-child { margin-bottom: 0; }
+.vehicle-item .v-title {
+  font-weight: 600;
+  color: #2a4a6a;
+  margin-bottom: 4px;
+  font-size: 0.84rem;
+}
+.vehicle-item .v-row {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 2px;
+  font-size: 0.78rem;
+}
+.vehicle-item .v-label {
+  color: var(--text-secondary);
+  min-width: 100px;
+  flex-shrink: 0;
+}
+.vehicle-item .v-val { font-weight: 500; }
+.vehicle-item .v-note {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-top: 4px;
+}
+
+/* FLEET TABLE */
+.fleet-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+  margin-top: 10px;
+}
+.fleet-table th, .fleet-table td {
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  text-align: left;
+}
+.fleet-table th {
+  background: linear-gradient(135deg, #e8eff8, #f0f5fa);
+  color: #2a4a6a;
+  font-weight: 600;
+  font-size: 0.76rem;
+}
+.fleet-table td { font-size: 0.78rem; }
+.fleet-table tr:nth-child(even) { background: var(--surface-alt); }
+.fleet-table .total-row {
+  font-weight: 700;
+  background: linear-gradient(135deg, #e8eff8, #f0f5fa);
+}
+
 /* ANALYSIS SECTION */
 .analysis-section { margin-top: 30px; }
 .analysis-card {
@@ -623,6 +697,10 @@ body {
     <h3>Business Entity Summary</h3>
     <div id="entitySummary"></div>
   </div>
+  <div class="analysis-card">
+    <h3>&#x1F69B; Fleet Inventory (Al Rajhi Bank Leased Vehicles)</h3>
+    <div id="fleetInventory"></div>
+  </div>
 </div>
 
 <!-- TAB: GROUPS -->
@@ -654,6 +732,7 @@ const CASES = [
     stages: "قبول 14/10 ← إبلاغ إلكتروني 17/10 ← حجز أموال 22/10",
     decisions: 2, creditorGroup: "rajhi",
     tags: ["bank", "fleet"],
+    vehicles: [{type:"Fleet Promissory Note", contract:"ARB-000000100372-FLEET", financing:"480,175 SAR", note:"3 promissory notes issued with fleet guarantee"}],
     note: "",
     attachment: `<h4>سند لأمر - مصرف الراجحي</h4><p>المبلغ: 174,414.84 ريال سعودي | مكان الانشاء: جدة | تاريخ الانشاء: 2025/05/14</p><p>محرر السند: غدير خالد عبدالعزيز الحساوي - هوية: 1011202627</p><p>كفيل غارم (1): مؤسسة غدير خالد عبدالعزيز الحساوي للتجارة - س.ت: 4030604215 - رقم موحد: 7002496375</p><p>كفيل غارم (2): مؤسسة غدير خالد عبدالعزيز الحساوي - نفس البيانات</p><p>المستفيد: مصرف الراجحي - سجل تجاري: 1010000096</p>`
   },
@@ -668,6 +747,7 @@ const CASES = [
     stages: "قبول 14/10 ← إبلاغ إلكتروني 17/10 ← حجز أموال 22/10",
     decisions: 2, creditorGroup: "rajhi",
     tags: ["bank", "fleet", "duplicate"],
+    vehicles: [{type:"Fleet Promissory Note", contract:"ARB-000000100372-FLEET", financing:"480,175 SAR", note:"3 promissory notes issued with fleet guarantee"}],
     note: "Duplicate of Case 1 - same document number, amount, and parties",
     attachment: `<h4>سند لأمر - مصرف الراجحي (مكرر)</h4><p>المبلغ: 174,414.84 ريال سعودي | مكان الانشاء: جدة | تاريخ الانشاء: 2025/05/14</p><p>محرر السند: غدير خالد عبدالعزيز الحساوي - هوية: 1011202627</p><p>كفيل غارم: مؤسسة غدير الشرق للتجارة - س.ت: 4030319915 - رقم موحد: 7002406375</p>`
   },
@@ -696,6 +776,7 @@ const CASES = [
     stages: "",
     decisions: 2, creditorGroup: "rajhi",
     tags: ["bank"],
+    vehicles: [{type:"Installment Financing (Mutajara)", contracts:"41523266, 41524085, 41524280", totalFinancing:"365,443.17 SAR", note:"3 vehicle installment contracts, all unpaid"}],
     note: "Includes an objection document",
     attachment: `<h4>سند لأمر - مصرف الراجحي</h4><p>المبلغ: 24,406.31 ريال سعودي | مكان الانشاء: جده | تاريخ الانشاء: 15/09/2022</p><p>محرر السند (المدين): مؤسسة غدير الشرق التجارية - سجل: 7005683292</p><p>عنوان محرر السند: شارع زينل جده</p><p>رقم الطلب: 41524085</p>`
   },
@@ -710,6 +791,7 @@ const CASES = [
     stages: "",
     decisions: 0, creditorGroup: "rajhi",
     tags: ["bank"],
+    vehicles: [{type:"Fleet Vehicle (unidentified)", note:"Installment arrears, Sep 2023 signing"}],
     note: "",
     attachment: `<h4>سند لأمر - مصرف الراجحي</h4><p>المبلغ: 54,421.68 ريال سعودي | مكان الانشاء: جده | تاريخ الانشاء: 28/09/2023</p><p>محرر السند (المدين): مؤسسة غدير الشرق التجارية - سجل: 7005683292</p><p>عنوان: شارع زينل جده | رقم الطلب: 50526798</p>`
   },
@@ -724,6 +806,7 @@ const CASES = [
     stages: "",
     decisions: 0, creditorGroup: "rajhi",
     tags: ["bank"],
+    vehicles: [{make:"Toyota", model:"Hiace", year:2023, chassis:"JTFLAFCP2P6019105", color:"White", contract:"48539575", financing:"Unknown", supplier:"Marad Al-Injaz for Cars"}],
     note: "",
     attachment: `<h4>سند لأمر - مصرف الراجحي</h4><p>المبلغ: 51,805.40 ريال سعودي | مكان الانشاء: جده | تاريخ الانشاء: 13/07/2023</p><p>محرر السند (المدين): مؤسسة غدير الشرق التجارية - سجل: 7005683292</p><p>رقم الطلب: 48539575 | فرع السنابل</p>`
   },
@@ -738,6 +821,7 @@ const CASES = [
     stages: "",
     decisions: 0, creditorGroup: "rajhi",
     tags: ["bank"],
+    vehicles: [{make:"Toyota", model:"Hiace", year:2023, chassis:"JTFLAFCP2P6019105", color:"White", contract:"48539575", financing:"Unknown", supplier:"Marad Al-Injaz for Cars"}],
     note: "",
     attachment: `<h4>سند لأمر - مصرف الراجحي</h4><p>المبلغ: 51,805.20 ريال سعودي | مكان الانشاء: جده | تاريخ الانشاء: 13/07/2023</p><p>محرر السند (المدين): مؤسسة غدير الشرق التجارية - سجل: 7005683292</p><p>المستحق في: 05/08/2024 | رقم الطلب: 48539575</p>`
   },
@@ -752,6 +836,7 @@ const CASES = [
     stages: "",
     decisions: 0, creditorGroup: "rajhi",
     tags: ["bank"],
+    vehicles: [{make:"Isuzu", model:"FVR", year:2023, chassis:"RS1P7S139PW001374", contract:"48227691", financing:"244,040 SAR", supplier:"Ramz Al-Imarat"}, {make:"Toyota", model:"Hilux", year:2023, chassis:"MR0CB9BB1P0067597", contract:"48297704", financing:"93,804 SAR", supplier:"Ramz Al-Imarat"}, {make:"Toyota", model:"Hiace", year:2023, chassis:"JTGHB9CP4P6044037", contract:"48297430", supplier:"Ramz Al-Imarat"}],
     note: "",
     attachment: `<h4>سند لأمر - مصرف الراجحي</h4><p>المبلغ: 32,831.28 ريال سعودي | مكان الانشاء: جده | تاريخ الانشاء: 20/06/2023</p><p>محرر السند: مؤسسة غدير الشرق التجارية | المستحق في: 05/07/2024</p><p>رقم الطلب: 48297704</p>`
   },
@@ -766,6 +851,7 @@ const CASES = [
     stages: "",
     decisions: 0, creditorGroup: "rajhi",
     tags: ["bank"],
+    vehicles: [{make:"Isuzu", model:"FVR", year:2023, chassis:"RS1P7S139PW001374", contract:"48227691", financing:"244,040 SAR", supplier:"Ramz Al-Imarat"}, {make:"Toyota", model:"Hilux", year:2023, chassis:"MR0CB9BB1P0067597", contract:"48297704", financing:"93,804 SAR", supplier:"Ramz Al-Imarat"}, {make:"Toyota", model:"Hiace", year:2023, chassis:"JTGHB9CP4P6044037", contract:"48297430", supplier:"Ramz Al-Imarat"}],
     note: "",
     attachment: `<h4>سند لأمر - مصرف الراجحي (نسخة 1 من 2)</h4><p>المبلغ: 32,831.76 ريال سعودي | مكان الانشاء: جده | تاريخ الانشاء: 20/06/2023</p><p>محرر السند: مؤسسة غدير الشرق التجارية | المستحق عند الاطلاع</p><p>رقم الطلب: 48297704</p><p><em>نسخة ثانية (401014704105693-2): نفس المحتوى - مؤسسة غدير الشرق التجارية، 32,831.76 ريال</em></p>`
   },
@@ -780,6 +866,7 @@ const CASES = [
     stages: "",
     decisions: 0, creditorGroup: "rajhi",
     tags: ["bank"],
+    vehicles: [{make:"Nissan", model:"Urvan", year:2023, chassis:"JN6CE6BS8P9035498", ref:"49832799", supplier:"Ramz Al-Imarat"}, {make:"Nissan", model:"Urvan", year:2023, chassis:"JN6CE6BS9P9035459", ref:"49949426", supplier:"Ramz Al-Imarat"}],
     note: "",
     attachment: `<h4>سند لأمر - مصرف الراجحي</h4><p>المبلغ: 34,119.36 ريال سعودي | مكان الانشاء: جده | تاريخ الانشاء: 30/08/2023</p><p>محرر السند: مؤسسة غدير الشرق التجارية | المستحق في: 05/09/2024</p><p>رقم الطلب: 49949553</p>`
   },
@@ -864,6 +951,7 @@ const CASES = [
     stages: "",
     decisions: 0, creditorGroup: "rajhi",
     tags: ["bank"],
+    vehicles: [{type:"Consolidated Fleet Debt", amount:"1,943,692.56 SAR", note:"Includes guarantors: \u0645\u0624\u0633\u0633\u0629 \u062e\u0627\u0644\u062f \u0639\u0628\u062f\u0627\u0644\u0639\u0632\u064a\u0632 \u0627\u0644\u062d\u0633\u0627\u0648\u064a \u0644\u0644\u062a\u062c\u0627\u0631\u0629 (CR:4030060215) + \u0645\u0624\u0633\u0633\u0629 \u063a\u062f\u064a\u0631 \u0627\u0644\u0634\u0631\u0642 \u0627\u0644\u062a\u062c\u0627\u0631\u064a\u0629 (CR:4030319915)"}],
     note: "Largest Al Rajhi note - guarantees from both establishments",
     attachment: `<h4>سند لأمر - مصرف الراجحي (الأكبر)</h4><p>المبلغ: 1,943,692.56 ريال سعودي | مكان الانشاء: الرياض | تاريخ: 2024-12-15م</p><p><strong>كفيل غارم (1):</strong> مؤسسة خالد عبد العزيز الحساوي للتجارة - سجل: 4030060215 - رقم موحد: 7002496375</p><p><strong>كفيل غارم (2):</strong> مؤسسة خالد عبد العزيز الحساوي للتجارة - سجل مدني: 1011202627</p><p><strong>كفيل غارم (3):</strong> مؤسسة غدير الشرق التجارية - سجل: 403019915 - رقم موحد: 7005689292</p><p>المستفيد: مصرف الراجحي - سجل: 7000102744 / 1010000096</p>`
   },
@@ -878,6 +966,7 @@ const CASES = [
     stages: "",
     decisions: 0, creditorGroup: "rajhi",
     tags: ["bank"],
+    vehicles: [{type:"Fleet Aggregate Claim", amount:"699,986.30 SAR"}],
     note: "",
     attachment: `<h4>سند لأمر - مصرف الراجحي</h4><p>المبلغ: 699,986.30 ريال سعودي | مكان الانشاء: الرياض | تاريخ: 2024-05-28م</p><p>محرر السند (المدين): مؤسسة غدير الشرق للتجارة - سجل: 4030319915 - رقم موحد: 7005683292</p><p>كفيل غارم: غدير خالد عبدالعزيز الحساوي - هوية: 1011202627</p><p>كفيل غارم: مؤسسة غدير خالد عبدالعزيز الحساوي للتجارة - سجل: 4030319915</p><p>عنوان: النزلة اليمانية, 2990, جدة | المستحق عند الاطلاع</p>`
   },
@@ -892,6 +981,7 @@ const CASES = [
     stages: "",
     decisions: 0, creditorGroup: "rajhi",
     tags: ["bank"],
+    vehicles: [{make:"Isuzu", model:"Pickup Double Cab", year:2023, plate:"8059 ب ط ط", note:"Possibly linked - Madinah assigned vehicle"}],
     note: "",
     attachment: `<p>لا يوجد مرفق محلل لهذه القضية (تم الامتناع)</p>`
   },
@@ -906,6 +996,7 @@ const CASES = [
     stages: "",
     decisions: 0, creditorGroup: "rajhi",
     tags: ["bank", "duplicate"],
+    vehicles: [{make:"Isuzu", model:"Pickup Double Cab", year:2023, plate:"8059 ب ط ط", note:"Possibly linked - Madinah assigned vehicle"}],
     note: "Duplicate of Case 18 - same document number, amount, and date",
     attachment: `<p>مكرر مع القضية 18 - نفس المستند 29535383 والمبلغ 61,867.68 ريال. كلاهما تم الامتناع.</p>`
   },
@@ -920,6 +1011,7 @@ const CASES = [
     stages: "",
     decisions: 0, creditorGroup: "rajhi",
     tags: ["bank", "fleet"],
+    vehicles: [{make:"Isuzu", model:"Pickup Double Cab", year:2023, plate:"8059 ب ط ط", note:"Possibly linked - Madinah assigned vehicle"}],
     note: "Same document as Cases 18 & 19 but this one was accepted",
     attachment: `<h4>سند لأمر - مصرف الراجحي (المدينة المنورة)</h4><p>المبلغ: 61,867.68 ريال سعودي | مكان الانشاء: المدينة المنورة | تاريخ: 2023/08/03</p><p>محرر السند (المدين): محامص عدوي للمكسرات - سجل: 4650265113 - رقم موحد: 7037251084</p><p>رقم العقد: ARB-000000108891-FLEET</p><p>كفيل غارم (1): مؤسسة غدير خالد عبدالعزيز الحساوي للتجارة - سجل: 4030604215</p><p>كفيل غارم (2): مؤسسة غدير خالد عبدالعزيز الحساوي للتجارة (نفسه)</p>`
   },
@@ -934,6 +1026,7 @@ const CASES = [
     stages: "",
     decisions: 0, creditorGroup: "rajhi",
     tags: ["bank"],
+    vehicles: [{type:"Fleet Vehicle (unidentified)", note:"Installment arrears, Sep 2023 signing"}],
     note: "",
     attachment: `<h4>سند لأمر - مصرف الراجحي</h4><p>المبلغ: 54,421.44 ريال | مكان الانشاء: جده | تاريخ: 28/09/2023</p><p>محرر السند: مؤسسة غدير الشرق التجارية - سجل: 7005683292</p><p>المستحق في: 05/10/2024 | رقم الطلب: 50526798</p>`
   },
@@ -948,6 +1041,7 @@ const CASES = [
     stages: "",
     decisions: 0, creditorGroup: "rajhi",
     tags: ["bank"],
+    vehicles: [{make:"Nissan", model:"Urvan", year:2023, chassis:"JN6CE6BS8P9035498", ref:"49832799", supplier:"Ramz Al-Imarat"}, {make:"Nissan", model:"Urvan", year:2023, chassis:"JN6CE6BS9P9035459", ref:"49949426", supplier:"Ramz Al-Imarat"}],
     note: "",
     attachment: `<h4>سند لأمر - مصرف الراجحي</h4><p>المبلغ: 37,758.36 ريال | مكان الانشاء: جده | تاريخ: 30/08/2023</p><p>محرر السند: مؤسسة غدير الشرق التجارية - سجل: 7005683292</p><p>المستحق عند الاطلاع | رقم الطلب: 49832799</p>`
   },
@@ -962,6 +1056,7 @@ const CASES = [
     stages: "",
     decisions: 0, creditorGroup: "rajhi",
     tags: ["bank"],
+    vehicles: [{make:"Nissan", model:"Urvan", year:2023, chassis:"JN6CE6BS8P9035498", ref:"49832799", supplier:"Ramz Al-Imarat"}, {make:"Nissan", model:"Urvan", year:2023, chassis:"JN6CE6BS9P9035459", ref:"49949426", supplier:"Ramz Al-Imarat"}],
     note: "",
     attachment: `<h4>سند لأمر - مصرف الراجحي</h4><p>المبلغ: 37,757.88 ريال | مكان الانشاء: جده | تاريخ: 30/08/2023</p><p>محرر السند: مؤسسة غدير الشرق التجارية | المستحق في: 05/09/2024</p><p>رقم الطلب: 49832799</p>`
   },
@@ -976,6 +1071,7 @@ const CASES = [
     stages: "",
     decisions: 0, creditorGroup: "rajhi",
     tags: ["bank"],
+    vehicles: [{make:"Isuzu", model:"FVR", year:2023, chassis:"RS1P7S139PW001374", contract:"48227691", financing:"244,040 SAR", supplier:"Ramz Al-Imarat"}, {make:"Toyota", model:"Hilux", year:2023, chassis:"MR0CB9BB1P0067597", contract:"48297704", financing:"93,804 SAR", supplier:"Ramz Al-Imarat"}, {make:"Toyota", model:"Hiace", year:2023, chassis:"JTGHB9CP4P6044037", contract:"48297430", supplier:"Ramz Al-Imarat"}],
     note: "",
     attachment: `<h4>سند لأمر - مصرف الراجحي</h4><p>المبلغ: 85,414.11 ريال | مكان الانشاء: جده | تاريخ: 20/06/2023</p><p>محرر السند: مؤسسة غدير الشرق التجارية - سجل: 7005683292</p><p>المستحق عند الاطلاع | رقم الطلب: 48227691</p>`
   },
@@ -990,6 +1086,7 @@ const CASES = [
     stages: "",
     decisions: 0, creditorGroup: "rajhi",
     tags: ["bank"],
+    vehicles: [{make:"Isuzu", model:"FVR", year:2023, chassis:"RS1P7S139PW001374", contract:"48227691", financing:"244,040 SAR", supplier:"Ramz Al-Imarat"}, {make:"Toyota", model:"Hilux", year:2023, chassis:"MR0CB9BB1P0067597", contract:"48297704", financing:"93,804 SAR", supplier:"Ramz Al-Imarat"}, {make:"Toyota", model:"Hiace", year:2023, chassis:"JTGHB9CP4P6044037", contract:"48297430", supplier:"Ramz Al-Imarat"}],
     note: "",
     attachment: `<h4>سند لأمر - مصرف الراجحي</h4><p>المبلغ: 85,413.96 ريال | مكان: جده | تاريخ: 20/06/2023</p><p>محرر السند: مؤسسة غدير الشرق التجارية | المستحق في: 05/07/2024</p><p>رقم الطلب: 48227691</p>`
   },
@@ -1004,6 +1101,7 @@ const CASES = [
     stages: "",
     decisions: 0, creditorGroup: "rajhi",
     tags: ["bank"],
+    vehicles: [{type:"Fleet Financing", contract:"FLEET-000000036131-ARB", financing:"384,654.25 SAR", note:"60 monthly installments, includes ISUZU FVR 2023 chassis RS1P7S134PW002321"}],
     note: "",
     attachment: `<h4>سند لأمر - مصرف الراجحي (توجيه 21125)</h4><p>المبلغ: 120,619.92 ريال | مكان: جده | تاريخ: 2024/07/07</p><p>محرر السند: مؤسسة غدير الشرق التجارية - سجل: 4030319915 - رقم موحد: 7005683292</p><p>عنوان: حي النزلة اليمنية, شارع زينل, جده | المفوض: غدير خالد - هوية: 1011202627</p><p>كفيل غارم (1): غدير خالد - كفيل غارم (2): مؤسسة غدير خالد للتجارة - سجل: 4030604215</p>`
   },
@@ -1018,6 +1116,7 @@ const CASES = [
     stages: "",
     decisions: 0, creditorGroup: "rajhi",
     tags: ["bank"],
+    vehicles: [{type:"Fleet Financing", contract:"FLEET-000000036131-ARB", financing:"384,654.25 SAR", note:"60 monthly installments, includes ISUZU FVR 2023 chassis RS1P7S134PW002321"}],
     note: "",
     attachment: `<h4>سند لأمر - مصرف الراجحي (توجيه 21125)</h4><p>المبلغ: 133,048.56 ريال | مكان: جدة | تاريخ: 2024/07/07</p><p>محرر السند: مؤسسة غدير الشرق التجارية - سجل: 4030319915 - رقم موحد: 7005683292</p><p>كفيل غارم (1): غدير خالد - هوية: 1011202627 | كفيل غارم (2): مؤسسة غدير خالد - سجل: 4030604215</p>`
   },
@@ -1032,6 +1131,7 @@ const CASES = [
     stages: "",
     decisions: 0, creditorGroup: "rajhi",
     tags: ["bank"],
+    vehicles: [{type:"Fleet Financing", contract:"FLEET-000000036131-ARB", financing:"384,654.25 SAR", note:"60 monthly installments, includes ISUZU FVR 2023 chassis RS1P7S134PW002321"}],
     note: "",
     attachment: `<h4>سند لأمر - مصرف الراجحي (توجيه 21125)</h4><p>المبلغ: 133,048.56 ريال | مكان: جدة | تاريخ: 2024/07/07</p><p>محرر السند: مؤسسة غدير الشرق التجارية - سجل: 4030319915 | عنوان: حي النزلة اليمنية</p><p>كفيل غارم (1): غدير خالد | كفيل غارم (2): مؤسسة غدير خالد - سجل: 4030604215</p>`
   },
@@ -1046,6 +1146,7 @@ const CASES = [
     stages: "",
     decisions: 0, creditorGroup: "rajhi",
     tags: ["bank", "fleet"],
+    vehicles: [{type:"Fleet Promissory Note", contract:"ARB-000000100372-FLEET", financing:"480,175 SAR", note:"3 promissory notes issued with fleet guarantee"}],
     note: "",
     attachment: `<h4>سند لأمر - مصرف الراجحي (توجيه 21125)</h4><p>المبلغ: 174,414.84 ريال | تاريخ: 2025/05/14 | مكان: جدة</p><p>رقم العقد: ARB-000000100372-FLEET</p><p>محرر السند: مؤسسة غدير الشرق للتجارة - سجل: 4030319915</p><p>كفيل غارم (1): غدير خالد - كفيل غارم (2): مؤسسة غدير خالد - سجل: 4030604215</p><p>كفيل غارم (3): مؤسسة غدير الشرق - سجل: 4030319915</p>`
   },
@@ -1060,6 +1161,7 @@ const CASES = [
     stages: "",
     decisions: 0, creditorGroup: "rajhi",
     tags: ["bank"],
+    vehicles: [{make:"Nissan", model:"Urvan", year:2023, chassis:"JN6CE6BS8P9035498", ref:"49832799", supplier:"Ramz Al-Imarat"}, {make:"Nissan", model:"Urvan", year:2023, chassis:"JN6CE6BS9P9035459", ref:"49949426", supplier:"Ramz Al-Imarat"}],
     note: "",
     attachment: `<h4>سند لأمر - مصرف الراجحي</h4><p>المبلغ: 34,119.52 ريال | مكان: جدة | تاريخ: 30/08/2023</p><p>محرر السند: مؤسسة غدير الشرق التجارية | المستحق عند الاطلاع | رقم الطلب: 49949553</p>`
   },
@@ -1460,6 +1562,7 @@ function renderCases() {
         </div>
         ${c.stages ? `<div style="margin-bottom:12px;"><strong style="font-size:0.82rem;color:var(--accent);">Execution Stages:</strong><div class="stage-timeline">${c.stages.split('←').map(s => `<span class="stage-item">${s.trim()}</span><span class="stage-arrow">&#8594;</span>`).join('').slice(0,-38)}</div></div>` : ''}
         ${c.note ? `<div style="background:var(--yellow-bg);border:1px solid var(--yellow-border);border-radius:4px;padding:8px 12px;font-size:0.82rem;margin-bottom:12px;"><strong>Note:</strong> ${c.note}</div>` : ''}
+        ${c.vehicles ? `<div class="vehicle-details"><h4>&#x1F69B; Fleet / Vehicle Details</h4>${c.vehicles.map(v => `<div class="vehicle-item">${v.make ? `<div class="v-title">${v.make} ${v.model}${v.year ? ' ('+v.year+')' : ''}${v.color ? ' - '+v.color : ''}</div>` : (v.type ? `<div class="v-title">${v.type}</div>` : '')}${v.chassis ? `<div class="v-row"><span class="v-label">Chassis:</span><span class="v-val">${v.chassis}</span></div>` : ''}${v.contract ? `<div class="v-row"><span class="v-label">Contract:</span><span class="v-val">${v.contract}</span></div>` : ''}${v.contracts ? `<div class="v-row"><span class="v-label">Contracts:</span><span class="v-val">${v.contracts}</span></div>` : ''}${v.ref ? `<div class="v-row"><span class="v-label">Ref:</span><span class="v-val">${v.ref}</span></div>` : ''}${v.plate ? `<div class="v-row"><span class="v-label">Plate:</span><span class="v-val">${v.plate}</span></div>` : ''}${v.financing ? `<div class="v-row"><span class="v-label">Financing:</span><span class="v-val">${v.financing}</span></div>` : ''}${v.totalFinancing ? `<div class="v-row"><span class="v-label">Total Financing:</span><span class="v-val">${v.totalFinancing}</span></div>` : ''}${v.amount ? `<div class="v-row"><span class="v-label">Amount:</span><span class="v-val">${v.amount}</span></div>` : ''}${v.supplier ? `<div class="v-row"><span class="v-label">Supplier:</span><span class="v-val">${v.supplier}</span></div>` : ''}${v.note ? `<div class="v-note">${v.note}</div>` : ''}</div>`).join('')}</div>` : ''}
         ${c.attachment ? `<div class="attachment-content"><h4 style="color:var(--accent);">Parsed Attachment (Original Arabic)</h4>${c.attachment}</div>` : ''}
       </div>
     </div>
@@ -1601,6 +1704,29 @@ function renderAnalysis() {
       <p>Headquarters: Jeddah | Joint guarantor on multiple promissory notes</p>
     </div>
   `;
+
+  // Fleet Inventory
+  document.getElementById('fleetInventory').innerHTML = `
+    <p style="font-size:0.82rem;color:var(--text-secondary);margin-bottom:10px;">All vehicles registered under <strong>Al Rajhi Bank</strong> (lessor). Customer account: <strong>#24475532</strong>. Total 9 known vehicles in fleet.</p>
+    <table class="fleet-table">
+      <thead>
+        <tr><th>#</th><th>Vehicle</th><th>Year</th><th>Chassis</th><th>Contract</th><th>Plate</th><th>Dept</th><th>Monthly (SAR)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>Toyota Hiace (Van)</td><td>2023</td><td>JTFLAFCP2P6019105</td><td>48539575</td><td>6231 ب ط أ</td><td>Qurban</td><td>4,317</td></tr>
+        <tr><td>2</td><td>Isuzu FVR (Truck)</td><td>2023</td><td>RS1P7S139PW001374</td><td>48227691</td><td>5936 ب ط ح</td><td>Team Babu</td><td>7,117</td></tr>
+        <tr><td>3</td><td>Toyota Hilux (Pickup)</td><td>2023</td><td>MR0CB9BB1P0067597</td><td>48297704</td><td>5937 ب ط ح</td><td>Hassan</td><td>2,843</td></tr>
+        <tr><td>4</td><td>Nissan Urvan</td><td>2023</td><td>JN6CE6BS8P9035498</td><td>49832799</td><td>8065 ب ط ط</td><td>Mada</td><td>3,146</td></tr>
+        <tr><td>5</td><td>Isuzu FVR (Truck)</td><td>2023</td><td>RS1P7S134PW002321</td><td>ARBCPO10087013</td><td>4338 ب ع س</td><td>Team Babu</td><td>7,397</td></tr>
+        <tr><td>6</td><td>Toyota Hiace (Van)</td><td>2023</td><td>JTGHB9CP4P6044037</td><td>48297430</td><td>4623 ب ط س</td><td>Osaimi</td><td>4,535</td></tr>
+        <tr><td>7</td><td>Nissan Urvan</td><td>2023</td><td>JN6CE6BS9P9035459</td><td>49949426</td><td>8060 ب ط ط</td><td>Mada</td><td>3,146</td></tr>
+        <tr><td>8</td><td>Nissan X-Trail</td><td>2024</td><td>--</td><td>--</td><td>1646 ر ك ي</td><td>Frozen</td><td>3,690</td></tr>
+        <tr><td>9</td><td>Isuzu Pickup Dbl Cab</td><td>2023</td><td>--</td><td>--</td><td>8059 ب ط ط</td><td>Madinah</td><td>2,735</td></tr>
+        <tr class="total-row"><td colspan="7" style="text-align:right;"><strong>Total Monthly Fleet Cost:</strong></td><td><strong>38,926</strong></td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.76rem;color:var(--text-muted);margin-top:8px;">Note: All vehicles are registered under Al Rajhi Bank as lessor (Mutajara / fleet financing). Monthly total ~38,926 SAR.</p>
+  `;
 }
 
 // ===== GROUPS =====
@@ -1616,6 +1742,7 @@ function renderGroups() {
         <p>Total Remaining: <span class="amount">${fmtSAR(CASES.filter(c=>c.creditorGroup==='rajhi').reduce((s,c)=>s+c.amountRemaining,0))}</span></p>
         <p>Note date range: June 2022 - May 2025 | Courts: Jeddah + Riyadh + Madinah</p>
         <p><strong>Recommendation:</strong> Unified negotiation with Al Rajhi collections for a comprehensive settlement at a significant discount</p>
+        <p style="margin-top:8px;padding:8px 12px;background:linear-gradient(135deg,#f0f5fa,#e8eff8);border:1px solid #b0c8e0;border-radius:4px;font-size:0.82rem;">&#x1F69B; <strong>Fleet Connection:</strong> All Al Rajhi cases are linked to vehicle fleet financing (9+ vehicles). Customer #24475532 = fleet customer account.<br>Vehicle fleet includes: Isuzu FVR trucks, Toyota Hilux pickups, Toyota Hiace vans, Nissan Urvans, Nissan X-Trail</p>
         <div class="cases-list-inline">
           ${CASES.filter(c=>c.creditorGroup==='rajhi').map(c=>`<span class="case-tag">${c.caseNum.slice(-6)}</span>`).join('')}
         </div>
