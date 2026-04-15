@@ -961,8 +961,8 @@ const CASES = [
     stages: "",
     decisions: 0, creditorGroup: "rajhi",
     tags: ["bank"],
-    vehicles: [{type:"Consolidated Fleet Debt", amount:"1,943,692.56 SAR", linkType:"inferred", note:"Includes guarantors: \u0645\u0624\u0633\u0633\u0629 \u062e\u0627\u0644\u062f \u0639\u0628\u062f\u0627\u0644\u0639\u0632\u064a\u0632 \u0627\u0644\u062d\u0633\u0627\u0648\u064a \u0644\u0644\u062a\u062c\u0627\u0631\u0629 (CR:4030060215) + \u0645\u0624\u0633\u0633\u0629 \u063a\u062f\u064a\u0631 \u0627\u0644\u0634\u0631\u0642 \u0627\u0644\u062a\u062c\u0627\u0631\u064a\u0629 (CR:4030319915)"}],
-    note: "Largest Al Rajhi note - guarantees from both establishments",
+    vehicles: [{type:"POS Financing (نقاط البيع)", contract:"ARB-00000000121470-POS", financing:"1,963,000 SAR principal", installment:"53,991.46 SAR/mo", term:"48 months, 8% APR", startDate:"2025-01-15", outstanding:"1,997,684.19 SAR", linkType:"inferred", note:"Point-of-Sale business financing — NOT fleet"}],
+    note: "POS Financing (ARB-00000000121470-POS) — guarantees from both establishments",
     attachment: `<h4>سند لأمر - مصرف الراجحي (الأكبر)</h4><p>المبلغ: 1,943,692.56 ريال سعودي | مكان الانشاء: الرياض | تاريخ: 2024-12-15م</p><p><strong>كفيل غارم (1):</strong> مؤسسة خالد عبد العزيز الحساوي للتجارة - سجل: 4030060215 - رقم موحد: 7002496375</p><p><strong>كفيل غارم (2):</strong> مؤسسة خالد عبد العزيز الحساوي للتجارة - سجل مدني: 1011202627</p><p><strong>كفيل غارم (3):</strong> مؤسسة غدير الشرق التجارية - سجل: 403019915 - رقم موحد: 7005689292</p><p>المستفيد: مصرف الراجحي - سجل: 7000102744 / 1010000096</p>`
   },
   {
@@ -976,8 +976,8 @@ const CASES = [
     stages: "",
     decisions: 0, creditorGroup: "rajhi",
     tags: ["bank"],
-    vehicles: [{type:"Fleet Aggregate Claim", amount:"699,986.30 SAR", linkType:"inferred"}],
-    note: "",
+    vehicles: [{type:"BIF Financing (تمويل أعمال)", contract:"ARB-0000017793-BIF", financing:"500,000 SAR principal", installment:"19,444.06 SAR/mo", term:"36 months, 13% APR", startDate:"2024-07-25", outstanding:"369,437.28 SAR", linkType:"inferred", note:"Business Investment Finance — NOT fleet"}],
+    note: "BIF Financing (ARB-0000017793-BIF) — business investment loan",
     attachment: `<h4>سند لأمر - مصرف الراجحي</h4><p>المبلغ: 699,986.30 ريال سعودي | مكان الانشاء: الرياض | تاريخ: 2024-05-28م</p><p>محرر السند (المدين): مؤسسة غدير الشرق للتجارة - سجل: 4030319915 - رقم موحد: 7005683292</p><p>كفيل غارم: غدير خالد عبدالعزيز الحساوي - هوية: 1011202627</p><p>كفيل غارم: مؤسسة غدير خالد عبدالعزيز الحساوي للتجارة - سجل: 4030319915</p><p>عنوان: النزلة اليمانية, 2990, جدة | المستحق عند الاطلاع</p>`
   },
   {
@@ -1343,7 +1343,7 @@ const FLEET_VEHICLES = [
   { id:11, make:"Isuzu", model:"Truck", year:2022, color:"White", chassis:"—", contract:"41524280", plate:"3263 ب ص ط", plateEn:"TXB 3263", dept:"Frozen", installment:3197, totalRepay:153456, deductDay:"6th", firstInst:"10/5/22", lastInst:"9/5/26", financing:"112,838 SAR", icon:"🚛", linkedCases:[], linkType:"none" },
   { id:12, make:"Toyota", model:"RAV4", year:2025, color:"White", chassis:"—", contract:"Fleet (May 2025)", plate:"1513 ر و ق", plateEn:"GUR 1513", dept:"Osaimi", installment:3807, totalRepay:182736, deductDay:"15th", firstInst:"5/14/25", lastInst:"5/14/29", financing:"Fleet contract", icon:"🚙", linkedCases:["401014704178780","401014704178773","401014704100344"], linkType:"inferred" },
   { id:13, make:"Isuzu", model:"REWARD", year:2025, color:"White", chassis:"—", contract:"Fleet (May 2025)", plate:"4313 ب ع ل", plateEn:"LEB 4313", dept:"Team Babu", installment:4064, totalRepay:195072, deductDay:"14th", firstInst:"5/14/25", lastInst:"5/14/29", financing:"Fleet contract", icon:"🚛", linkedCases:["401014704178780","401014704178773","401014704100344"], linkType:"inferred" },
-  { id:14, make:"Nissan", model:"X-Trail", year:2024, color:"Black", chassis:"—", contract:"Fleet", plate:"1646 ر ك ي", plateEn:"VKR 1646", dept:"Frozen", installment:3690, totalRepay:177120, deductDay:"8th", firstInst:"10/9/24", lastInst:"10/9/28", financing:"—", icon:"🚙", linkedCases:["401014704084947","401014704089841"], linkType:"inferred" },
+  { id:14, make:"Nissan", model:"X-Trail", year:2024, color:"Black", chassis:"—", contract:"Fleet", plate:"1646 ر ك ي", plateEn:"VKR 1646", dept:"Frozen", installment:3690, totalRepay:177120, deductDay:"8th", firstInst:"10/9/24", lastInst:"10/9/28", financing:"—", icon:"🚙", linkedCases:[], linkType:"none" },
   { id:15, make:"Changan", model:"CS95", year:2023, color:"White", chassis:"—", contract:"41523266", plate:"8650 ر د أ", plateEn:"ADR 8650", dept:"Madinah", installment:3215, totalRepay:154320, deductDay:"6th", firstInst:"10/5/22", lastInst:"9/5/26", financing:"113,500 SAR", icon:"🚙", linkedCases:[], linkType:"none" },
   { id:16, make:"Isuzu", model:"Pickup (Double Cab)", year:2023, color:"White", chassis:"—", contract:"Unknown", plate:"8059 ب ط ط", plateEn:"TTB 8059", dept:"Madinah", installment:2735, totalRepay:131280, deductDay:"6th", firstInst:"7/6/23", lastInst:"7/6/27", financing:"—", icon:"🛻", linkedCases:["401014704091030"], linkType:"inferred" }
 ];

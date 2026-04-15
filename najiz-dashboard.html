@@ -933,8 +933,8 @@ const CASES = [
     stages: "",
     decisions: 0, creditorGroup: "rajhi",
     tags: ["bank"],
-    vehicles: [{type:"دين أسطول مجمّع", amount:"1,943,692.56 ريال", note:"يشمل كفلاء: مؤسسة خالد عبدالعزيز الحساوي للتجارة (س.ت:4030060215) + مؤسسة غدير الشرق التجارية (س.ت:4030319915)", plate:"1646 ر ك ي", linkType:"inferred"}],
-    note: "أكبر سند راجحي - ضمانات من كلا المؤسستين",
+    vehicles: [{type:"تمويل نقاط البيع (POS)", contract:"ARB-00000000121470-POS", financing:"1,963,000 ريال أصل", installment:"53,991.46 ريال/شهر", term:"48 شهر، 8% سنوي", startDate:"2025-01-15", outstanding:"1,997,684.19 ريال", linkType:"inferred", note:"تمويل نقاط بيع — ليس أسطول"}],
+    note: "تمويل نقاط البيع (ARB-00000000121470-POS) — ضمانات من كلا المؤسستين",
     attachment: `<h4>سند لأمر - مصرف الراجحي (الأكبر)</h4><p>المبلغ: 1,943,692.56 ريال سعودي | مكان الانشاء: الرياض | تاريخ: 2024-12-15م</p><p><strong>كفيل غارم (1):</strong> مؤسسة خالد عبد العزيز الحساوي للتجارة - سجل: 4030060215 - رقم موحد: 7002496375</p><p><strong>كفيل غارم (2):</strong> مؤسسة خالد عبد العزيز الحساوي للتجارة - سجل مدني: 1011202627</p><p><strong>كفيل غارم (3):</strong> مؤسسة غدير الشرق التجارية - سجل: 403019915 - رقم موحد: 7005689292</p><p>المستفيد: مصرف الراجحي - سجل: 7000102744 / 1010000096</p>`
   },
   {
@@ -948,8 +948,8 @@ const CASES = [
     stages: "",
     decisions: 0, creditorGroup: "rajhi",
     tags: ["bank"],
-    vehicles: [{type:"مطالبة أسطول مجمّعة", amount:"699,986.30 ريال", plate:"1646 ر ك ي", linkType:"inferred"}],
-    note: "",
+    vehicles: [{type:"تمويل أعمال (BIF)", contract:"ARB-0000017793-BIF", financing:"500,000 ريال أصل", installment:"19,444.06 ريال/شهر", term:"36 شهر، 13% سنوي", startDate:"2024-07-25", outstanding:"369,437.28 ريال", linkType:"inferred", note:"تمويل استثمار أعمال — ليس أسطول"}],
+    note: "تمويل أعمال (ARB-0000017793-BIF) — قرض استثماري",
     attachment: `<h4>سند لأمر - مصرف الراجحي</h4><p>المبلغ: 699,986.30 ريال سعودي | مكان الانشاء: الرياض | تاريخ: 2024-05-28م</p><p>محرر السند (المدين): مؤسسة غدير الشرق للتجارة - سجل: 4030319915 - رقم موحد: 7005683292</p><p>كفيل غارم: غدير خالد عبدالعزيز الحساوي - هوية: 1011202627</p><p>كفيل غارم: مؤسسة غدير خالد عبدالعزيز الحساوي للتجارة - سجل: 4030319915</p><p>عنوان: النزلة اليمانية, 2990, جدة | المستحق عند الاطلاع</p>`
   },
   {
@@ -1315,7 +1315,7 @@ const FLEET_VEHICLES = [
   { id:11, make:"إيسوزو", model:"شاحنة", year:2022, color:"أبيض", chassis:"—", contract:"41524280", plate:"3263 ب ص ط", plateEn:"TXB 3263", dept:"فروزن", installment:3197, totalRepay:153456, deductDay:"6", firstInst:"10/5/22", lastInst:"9/5/26", financing:"112,838 ريال", icon:"🚛", linkedCases:[], linkType:"none" },
   { id:12, make:"تويوتا", model:"RAV4", year:2025, color:"أبيض", chassis:"—", contract:"أسطول (مايو 2025)", plate:"1513 ر و ق", plateEn:"GUR 1513", dept:"عسيمي", installment:3807, totalRepay:182736, deductDay:"15", firstInst:"5/14/25", lastInst:"5/14/29", financing:"عقد أسطول", icon:"🚙", linkedCases:["401014704178780","401014704178773","401014704100344"], linkType:"inferred" },
   { id:13, make:"إيسوزو", model:"REWARD", year:2025, color:"أبيض", chassis:"—", contract:"أسطول (مايو 2025)", plate:"4313 ب ع ل", plateEn:"LEB 4313", dept:"فريق بابو", installment:4064, totalRepay:195072, deductDay:"14", firstInst:"5/14/25", lastInst:"5/14/29", financing:"عقد أسطول", icon:"🚛", linkedCases:["401014704178780","401014704178773","401014704100344"], linkType:"inferred" },
-  { id:14, make:"نيسان", model:"إكس تريل", year:2024, color:"أسود", chassis:"—", contract:"أسطول", plate:"1646 ر ك ي", plateEn:"VKR 1646", dept:"فروزن", installment:3690, totalRepay:177120, deductDay:"8", firstInst:"10/9/24", lastInst:"10/9/28", financing:"—", icon:"🚙", linkedCases:["401014704084947","401014704089841"], linkType:"inferred" },
+  { id:14, make:"نيسان", model:"إكس تريل", year:2024, color:"أسود", chassis:"—", contract:"أسطول", plate:"1646 ر ك ي", plateEn:"VKR 1646", dept:"فروزن", installment:3690, totalRepay:177120, deductDay:"8", firstInst:"10/9/24", lastInst:"10/9/28", financing:"—", icon:"🚙", linkedCases:[], linkType:"none" },
   { id:15, make:"شانجان", model:"CS95", year:2023, color:"أبيض", chassis:"—", contract:"41523266", plate:"8650 ر د أ", plateEn:"ADR 8650", dept:"المدينة", installment:3215, totalRepay:154320, deductDay:"6", firstInst:"10/5/22", lastInst:"9/5/26", financing:"113,500 ريال", icon:"🚙", linkedCases:[], linkType:"none" },
   { id:16, make:"إيسوزو", model:"بيك أب (غمارتين)", year:2023, color:"أبيض", chassis:"—", contract:"غير معروف", plate:"8059 ب ط ط", plateEn:"TTB 8059", dept:"المدينة", installment:2735, totalRepay:131280, deductDay:"6", firstInst:"7/6/23", lastInst:"7/6/27", financing:"—", icon:"🛻", linkedCases:["401014704091030"], linkType:"inferred" }
 ];
