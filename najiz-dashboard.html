@@ -1,0 +1,1677 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Najiz Execution Cases Dashboard - غدير خالد عبدالعزيز الحساوي</title>
+<style>
+:root {
+  --bg: #f5f5f0;
+  --surface: #ffffff;
+  --surface-alt: #fafaf7;
+  --border: #e0ddd5;
+  --border-dark: #c5c0b5;
+  --text: #2c2c2c;
+  --text-secondary: #6b6560;
+  --text-muted: #9a948c;
+  --accent: #5a6e5a;
+  --accent-light: #e8ede8;
+  --red: #b44040;
+  --red-bg: #fdf0f0;
+  --red-border: #e8b0b0;
+  --orange: #c27830;
+  --orange-bg: #fdf5ec;
+  --orange-border: #e8c8a0;
+  --green: #408040;
+  --green-bg: #f0f5f0;
+  --green-border: #a0c8a0;
+  --gray: #808080;
+  --gray-bg: #f0f0f0;
+  --gray-border: #c0c0c0;
+  --yellow: #a08020;
+  --yellow-bg: #fdf8e8;
+  --yellow-border: #d8c870;
+  --blue: #406080;
+  --blue-bg: #f0f4f8;
+  --blue-border: #a0b8d0;
+  --shadow: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-lg: 0 4px 12px rgba(0,0,0,0.1);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+.container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+
+/* HEADER */
+.header {
+  background: linear-gradient(135deg, #3a4a3a, #4a5a4a);
+  color: #fff;
+  padding: 30px 0 20px;
+  position: relative;
+}
+.header h1 { font-size: 1.6rem; font-weight: 600; margin-bottom: 4px; }
+.header .subtitle { font-size: 0.95rem; opacity: 0.8; margin-bottom: 16px; }
+.header .meta { font-size: 0.82rem; opacity: 0.6; }
+
+/* STATS CARDS */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin: -24px 0 20px;
+  position: relative;
+  z-index: 2;
+}
+.stat-card {
+  background: var(--surface);
+  border-radius: 8px;
+  padding: 16px 18px;
+  box-shadow: var(--shadow-lg);
+  border-top: 3px solid var(--accent);
+}
+.stat-card.red { border-top-color: var(--red); }
+.stat-card.green { border-top-color: var(--green); }
+.stat-card.gray { border-top-color: var(--gray); }
+.stat-card.yellow { border-top-color: var(--yellow); }
+.stat-card.blue { border-top-color: var(--blue); }
+.stat-card .label { font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 4px; }
+.stat-card .value { font-size: 1.5rem; font-weight: 700; }
+.stat-card .sub { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
+
+/* PIE CHART */
+.pie-section {
+  background: var(--surface);
+  border-radius: 8px;
+  padding: 20px 24px;
+  box-shadow: var(--shadow-lg);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+.pie-section h3 {
+  width: 100%;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+.pie-chart-container {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  flex-shrink: 0;
+}
+.pie-chart-container svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.pie-center-label {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+.pie-center-label .pie-total { font-size: 1.1rem; font-weight: 700; color: var(--text); }
+.pie-center-label .pie-sub { font-size: 0.7rem; color: var(--text-muted); }
+.pie-legend {
+  flex: 1;
+  min-width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.pie-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.82rem;
+  padding: 5px 0;
+  border-bottom: 1px solid var(--bg);
+}
+.pie-legend-item:last-child { border-bottom: none; }
+.pie-legend-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+.pie-legend-name { flex: 1; color: var(--text); }
+.pie-legend-amount { font-weight: 600; color: var(--text); font-variant-numeric: tabular-nums; }
+.pie-legend-pct { color: var(--text-muted); font-size: 0.75rem; width: 42px; text-align: left; }
+@media (max-width: 640px) {
+  .pie-section { justify-content: center; }
+  .pie-chart-container { width: 180px; height: 180px; }
+}
+
+/* FILTER BAR */
+.filter-bar {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.filter-section { margin-bottom: 10px; }
+.filter-section:last-child { margin-bottom: 0; }
+.filter-label { font-size: 0.78rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; display: block; }
+.filter-group { display: flex; flex-wrap: wrap; gap: 6px; }
+.filter-btn {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 5px 12px;
+  font-size: 0.78rem;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+.filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+.filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.filter-btn .count {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 18px; height: 18px;
+  background: rgba(0,0,0,0.08);
+  border-radius: 9px;
+  font-size: 0.7rem;
+  padding: 0 4px;
+}
+.filter-btn.active .count { background: rgba(255,255,255,0.25); }
+.search-box {
+  padding: 7px 14px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 0.85rem;
+  width: 260px;
+  font-family: inherit;
+  background: var(--surface-alt);
+}
+.search-box:focus { outline: none; border-color: var(--accent); }
+.filter-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.clear-btn {
+  padding: 5px 12px; font-size: 0.78rem;
+  border: 1px solid var(--border); border-radius: 6px;
+  background: var(--surface); cursor: pointer; font-family: inherit;
+  color: var(--text-secondary);
+}
+.clear-btn:hover { background: var(--red-bg); color: var(--red); border-color: var(--red-border); }
+.results-count { font-size: 0.78rem; color: var(--text-muted); }
+
+/* ACTIVE FILTERS STRIP */
+.active-filters-strip {
+  display: none; align-items: center; gap: 8px; flex-wrap: wrap;
+  padding: 10px 16px; margin: -8px 0 12px;
+  background: var(--accent-light); border: 1px solid var(--accent); border-radius: 8px; font-size: 0.82rem;
+}
+.active-filters-strip.visible { display: flex; }
+.active-filters-strip .afs-label { color: var(--accent); font-weight: 600; margin-left: 4px; }
+.filter-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 12px 4px 10px; background: var(--surface);
+  border: 1px solid var(--border-dark); border-radius: 20px; font-size: 0.78rem; color: var(--text);
+}
+.filter-chip .chip-cat { color: var(--text-muted); font-size: 0.7rem; }
+.filter-chip .chip-remove {
+  width: 18px; height: 18px; display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 50%; background: var(--gray-bg); color: var(--text-secondary);
+  cursor: pointer; font-size: 0.72rem; border: none; line-height: 1;
+}
+.filter-chip .chip-remove:hover { background: var(--red-bg); color: var(--red); }
+.afs-clear-all {
+  margin-right: auto; padding: 4px 12px; font-size: 0.75rem;
+  border: 1px solid var(--red-border); border-radius: 20px;
+  background: var(--red-bg); color: var(--red); cursor: pointer; font-family: inherit; font-weight: 600;
+}
+.afs-clear-all:hover { background: var(--red); color: #fff; }
+
+/* TABS */
+.tabs {
+  display: flex; gap: 0; margin-bottom: 20px;
+  border-bottom: 2px solid var(--border);
+}
+.tab-btn {
+  padding: 10px 20px;
+  font-size: 0.88rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--text-secondary);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  font-family: inherit;
+  font-weight: 500;
+  transition: all 0.15s;
+}
+.tab-btn:hover { color: var(--text); }
+.tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* CASE CARDS */
+.cases-list { display: flex; flex-direction: column; gap: 10px; }
+.case-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.2s;
+}
+.case-card:hover { box-shadow: var(--shadow-lg); }
+.case-header {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 14px;
+  padding: 14px 18px;
+  cursor: pointer;
+  align-items: center;
+}
+.case-num {
+  font-family: 'Courier New', monospace;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  background: var(--surface-alt);
+  padding: 2px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+}
+.case-info { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; }
+.case-creditor { font-weight: 600; font-size: 0.92rem; }
+.case-amount { font-weight: 700; font-size: 1rem; }
+.case-amount.large { font-size: 1.1rem; color: var(--red); }
+.case-meta-item { font-size: 0.78rem; color: var(--text-muted); }
+.case-right { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+.badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge-active { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border); }
+.badge-completed { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+.badge-refused { background: var(--gray-bg); color: var(--gray); border: 1px solid var(--gray-border); }
+.badge-grace { background: var(--yellow-bg); color: var(--yellow); border: 1px solid var(--yellow-border); }
+.badge-executed { background: var(--blue-bg); color: var(--blue); border: 1px solid var(--blue-border); }
+.tag {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: 10px;
+  font-size: 0.68rem;
+  background: var(--surface-alt);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+}
+.tag.bank { background: #e8edf5; color: #405080; border-color: #b0c0e0; }
+.tag.individual { background: #f5ece8; color: #805040; border-color: #d0b0a0; }
+.tag.trade { background: #e8f0e8; color: #406040; border-color: #a0c0a0; }
+.tag.shipping { background: #f0e8f0; color: #604060; border-color: #c0a0c0; }
+.tag.fleet { background: #f5f0e0; color: #606020; border-color: #c0c080; }
+.tag.duplicate { background: #fff0e0; color: #a06020; border-color: #d0b080; }
+.expand-icon {
+  display: inline-block; width: 20px; height: 20px; text-align: center;
+  line-height: 20px; font-size: 0.8rem; color: var(--text-muted);
+  transition: transform 0.2s;
+}
+.case-card.expanded .expand-icon { transform: rotate(90deg); }
+.case-detail {
+  display: none;
+  border-top: 1px solid var(--border);
+  padding: 18px;
+  background: var(--surface-alt);
+}
+.case-card.expanded .case-detail { display: block; }
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 14px;
+  margin-bottom: 14px;
+}
+.detail-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 12px;
+}
+.detail-box h4 { font-size: 0.82rem; color: var(--accent); margin-bottom: 8px; font-weight: 600; }
+.detail-row { display: flex; gap: 8px; margin-bottom: 4px; font-size: 0.82rem; }
+.detail-label { color: var(--text-secondary); min-width: 100px; flex-shrink: 0; }
+.detail-value { font-weight: 500; }
+.stage-timeline {
+  display: flex; gap: 0; align-items: center; flex-wrap: wrap; margin-top: 8px;
+}
+.stage-item {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 0.75rem; color: var(--text-secondary);
+  padding: 4px 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+.stage-arrow { color: var(--text-muted); font-size: 0.7rem; margin: 0 2px; }
+.attachment-content {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 14px;
+  margin-top: 12px;
+  font-size: 0.82rem;
+  line-height: 1.7;
+  max-height: 400px;
+  overflow-y: auto;
+}
+.attachment-content h4 { margin-bottom: 10px; }
+.attachment-content table { width: 100%; border-collapse: collapse; margin: 8px 0; }
+.attachment-content td, .attachment-content th {
+  padding: 4px 8px; border: 1px solid var(--border);
+  text-align: right; font-size: 0.8rem;
+}
+.attachment-content th { background: var(--surface-alt); font-weight: 600; }
+
+/* ANALYSIS SECTION */
+.analysis-section { margin-top: 30px; }
+.analysis-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+}
+.analysis-card h3 { font-size: 1rem; margin-bottom: 14px; color: var(--accent); }
+.bar-chart { display: flex; flex-direction: column; gap: 8px; }
+.bar-row { display: flex; align-items: center; gap: 10px; }
+.bar-label { font-size: 0.8rem; min-width: 160px; text-align: left; color: var(--text-secondary); }
+.bar-track { flex: 1; height: 24px; background: var(--surface-alt); border-radius: 4px; border: 1px solid var(--border); overflow: hidden; position: relative; }
+.bar-fill { height: 100%; border-radius: 4px; transition: width 0.5s; display: flex; align-items: center; padding: 0 8px; }
+.bar-value { font-size: 0.72rem; font-weight: 600; white-space: nowrap; }
+.bar-fill.rajhi { background: #c8d8c8; color: #2a4a2a; }
+.bar-fill.subaie { background: #d8c8b8; color: #4a3a2a; }
+.bar-fill.snb { background: #b8c8d8; color: #2a3a4a; }
+.bar-fill.riyad { background: #d8d8b8; color: #3a3a2a; }
+.bar-fill.individual { background: #d8c0c0; color: #4a2a2a; }
+.bar-fill.trade { background: #c0d0c0; color: #2a3a2a; }
+.bar-fill.shipping { background: #c8c0d0; color: #3a2a4a; }
+
+.group-box {
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 14px;
+  margin-bottom: 10px;
+}
+.group-box h4 { font-size: 0.88rem; margin-bottom: 6px; }
+.group-box p { font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 4px; }
+.group-box .amount { font-weight: 700; color: var(--red); }
+.group-box .cases-list-inline {
+  display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px;
+}
+.group-box .case-tag {
+  font-size: 0.7rem; padding: 2px 6px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 3px; font-family: monospace;
+}
+.risk-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 12px;
+  background: var(--surface-alt);
+  border-radius: 6px;
+  margin-bottom: 6px;
+  font-size: 0.82rem;
+}
+.risk-dot {
+  width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+}
+.risk-dot.high { background: var(--red); }
+.risk-dot.medium { background: var(--orange); }
+.risk-dot.low { background: var(--green); }
+
+/* TIMELINE */
+.timeline { position: relative; padding-right: 20px; }
+.timeline::before {
+  content: ''; position: absolute; right: 8px; top: 0; bottom: 0;
+  width: 2px; background: var(--border);
+}
+.timeline-item {
+  position: relative; margin-bottom: 12px; padding-right: 30px;
+}
+.timeline-item::before {
+  content: ''; position: absolute; right: -1px; top: 6px;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--accent); border: 2px solid var(--surface);
+  z-index: 1;
+}
+.timeline-date { font-size: 0.75rem; color: var(--text-muted); }
+.timeline-text { font-size: 0.82rem; }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .case-header { grid-template-columns: 1fr; gap: 8px; }
+  .case-right { align-items: flex-start; flex-direction: row; gap: 8px; }
+  .filter-section .filter-group { gap: 4px; }
+  .search-box { width: 100%; }
+  .detail-grid { grid-template-columns: 1fr; }
+  .bar-label { min-width: 100px; font-size: 0.72rem; }
+  .tabs { overflow-x: auto; }
+}
+
+/* PRINT */
+@media print {
+  .filter-bar, .tabs { display: none !important; }
+  .case-detail { display: block !important; }
+  .case-card { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+  .header { background: #333 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { background: #fff; }
+  .stat-card { box-shadow: none; border: 1px solid #ccc; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="container">
+    <h1>لوحة متابعة قضايا التنفيذ - ناجز</h1>
+    <div class="subtitle">غدير خالد عبدالعزيز الحساوي | هوية: 1011202627</div>
+    <div class="meta">تاريخ التقرير: 2026-04-15 | المصدر: منصة ناجز - وزارة العدل</div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- STATS -->
+<div class="stats-grid" id="statsGrid">
+  <div class="stat-card">
+    <div class="label">إجمالي القضايا</div>
+    <div class="value" id="totalCases">44</div>
+    <div class="sub">منذ 1441هـ حتى الآن</div>
+  </div>
+  <div class="stat-card red">
+    <div class="label">قيد التنفيذ (المادة 46)</div>
+    <div class="value" id="activeCases">31</div>
+    <div class="sub" id="activeAmount"></div>
+  </div>
+  <div class="stat-card green">
+    <div class="label">منتهية</div>
+    <div class="value" id="completedCases">0</div>
+    <div class="sub" id="completedAmount"></div>
+  </div>
+  <div class="stat-card gray">
+    <div class="label">تم الامتناع</div>
+    <div class="value" id="refusedCases">0</div>
+    <div class="sub" id="refusedAmount"></div>
+  </div>
+  <div class="stat-card yellow">
+    <div class="label">تم الامهال</div>
+    <div class="value" id="graceCases">0</div>
+    <div class="sub" id="graceAmount"></div>
+  </div>
+  <div class="stat-card blue">
+    <div class="label">إجمالي المطالبات</div>
+    <div class="value" id="totalClaimed"></div>
+    <div class="sub" id="totalRemaining"></div>
+  </div>
+</div>
+
+<!-- PIE CHART: المتبقي حسب الدائن -->
+<div class="pie-section">
+  <h3>المبالغ المتبقية حسب الدائن</h3>
+  <div class="pie-chart-container" id="pieChartContainer"></div>
+  <div class="pie-legend" id="pieLegend"></div>
+</div>
+
+<!-- FILTERS -->
+<div class="filter-bar" id="filterBar">
+  <div class="filter-section">
+    <span class="filter-label">الدائن:</span>
+    <div class="filter-group" id="creditorFilters"></div>
+  </div>
+  <div class="filter-section">
+    <span class="filter-label">الحالة:</span>
+    <div class="filter-group" id="statusFilters"></div>
+  </div>
+  <div class="filter-section">
+    <span class="filter-label">المحكمة:</span>
+    <div class="filter-group" id="courtFilters"></div>
+  </div>
+  <div class="filter-section">
+    <span class="filter-label">النوع:</span>
+    <div class="filter-group" id="typeFilters"></div>
+  </div>
+  <div class="filter-section">
+    <span class="filter-label">التصنيف:</span>
+    <div class="filter-group" id="tagFilters"></div>
+  </div>
+  <div class="filter-section">
+    <div class="filter-actions">
+      <input type="text" class="search-box" id="searchBox" placeholder="بحث برقم القضية...">
+      <button class="clear-btn" onclick="clearFilters()">مسح الفلاتر</button>
+      <span class="results-count" id="resultsCount"></span>
+    </div>
+  </div>
+</div>
+
+<!-- ACTIVE FILTERS STRIP -->
+<div class="active-filters-strip" id="activeFiltersStrip">
+  <span class="afs-label">الفلاتر النشطة:</span>
+  <div id="activeFilterChips"></div>
+  <button class="afs-clear-all" onclick="clearFilters()">مسح الكل &times;</button>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab-btn active" data-tab="cases">القضايا</button>
+  <button class="tab-btn" data-tab="analysis">التحليل والرؤى</button>
+  <button class="tab-btn" data-tab="groups">التجميع والمفاوضات</button>
+  <button class="tab-btn" data-tab="timeline">الجدول الزمني</button>
+</div>
+
+<!-- TAB: CASES -->
+<div class="tab-content active" id="tab-cases">
+  <div class="cases-list" id="casesList"></div>
+</div>
+
+<!-- TAB: ANALYSIS -->
+<div class="tab-content" id="tab-analysis">
+  <div class="analysis-card">
+    <h3>توزيع المطالبات حسب الدائن</h3>
+    <div class="bar-chart" id="creditorChart"></div>
+  </div>
+  <div class="analysis-card">
+    <h3>تقييم المخاطر</h3>
+    <div id="riskAssessment"></div>
+  </div>
+  <div class="analysis-card">
+    <h3>ملخص الكيانات التجارية</h3>
+    <div id="entitySummary"></div>
+  </div>
+</div>
+
+<!-- TAB: GROUPS -->
+<div class="tab-content" id="tab-groups">
+  <div id="groupsList"></div>
+</div>
+
+<!-- TAB: TIMELINE -->
+<div class="tab-content" id="tab-timeline">
+  <div class="analysis-card">
+    <h3>الجدول الزمني لرفع القضايا</h3>
+    <div class="timeline" id="timelineView"></div>
+  </div>
+</div>
+
+</div>
+
+<script>
+// ===== CASE DATA =====
+const CASES = [
+  {
+    id: 1, caseNum: "401014704178780", status: "active", statusAr: "قيد تنفيذ 46",
+    type: "promissory", typeAr: "سند لأمر",
+    court: "jeddah", courtAr: "محكمة التنفيذ بجدة", dept: "دائرة التنفيذ الثانية عشر",
+    filingDate: "14/10/1447", amountClaimed: 174414.84, amountReceived: 0, amountRemaining: 174414.84,
+    docNum: "24475532", docDate: "2025-05-14",
+    requester: "شركة الراجحي المصرفية للاستثمار", requesterAgent: "المنذر عبدالله اسماعيل الغانمي",
+    against: "غدير خالد عبدالعزيز الحساوي",
+    stages: "قبول 14/10 ← إبلاغ إلكتروني 17/10 ← حجز أموال 22/10",
+    decisions: 2, creditorGroup: "rajhi",
+    tags: ["bank", "fleet"],
+    note: "",
+    attachment: `<h4>سند لأمر - مصرف الراجحي</h4><p>المبلغ: 174,414.84 ريال سعودي | مكان الانشاء: جدة | تاريخ الانشاء: 2025/05/14</p><p>محرر السند: غدير خالد عبدالعزيز الحساوي - هوية: 1011202627</p><p>كفيل غارم (1): مؤسسة غدير خالد عبدالعزيز الحساوي للتجارة - س.ت: 4030604215 - رقم موحد: 7002496375</p><p>كفيل غارم (2): مؤسسة غدير خالد عبدالعزيز الحساوي - نفس البيانات</p><p>المستفيد: مصرف الراجحي - سجل تجاري: 1010000096</p>`
+  },
+  {
+    id: 2, caseNum: "401014704178773", status: "active", statusAr: "قيد تنفيذ 46",
+    type: "promissory", typeAr: "سند لأمر",
+    court: "jeddah", courtAr: "محكمة التنفيذ بجدة", dept: "دائرة التنفيذ الثانية عشر",
+    filingDate: "14/10/1447", amountClaimed: 174414.84, amountReceived: 0, amountRemaining: 174414.84,
+    docNum: "24475532", docDate: "2025-05-14",
+    requester: "شركة الراجحي المصرفية للاستثمار", requesterAgent: "المنذر عبدالله اسماعيل الغانمي",
+    against: "غدير خالد عبدالعزيز الحساوي",
+    stages: "قبول 14/10 ← إبلاغ إلكتروني 17/10 ← حجز أموال 22/10",
+    decisions: 2, creditorGroup: "rajhi",
+    tags: ["bank", "fleet", "duplicate"],
+    note: "مكرر مع القضية 1 - نفس رقم المستند والمبلغ والأطراف",
+    attachment: `<h4>سند لأمر - مصرف الراجحي (مكرر)</h4><p>المبلغ: 174,414.84 ريال سعودي | مكان الانشاء: جدة | تاريخ الانشاء: 2025/05/14</p><p>محرر السند: غدير خالد عبدالعزيز الحساوي - هوية: 1011202627</p><p>كفيل غارم: مؤسسة غدير الشرق للتجارة - س.ت: 4030319915 - رقم موحد: 7002406375</p>`
+  },
+  {
+    id: 3, caseNum: "401014704123649", status: "active", statusAr: "قيد تنفيذ 46",
+    type: "promissory", typeAr: "سند لأمر",
+    court: "jeddah", courtAr: "محكمة التنفيذ بجدة", dept: "دائرة التنفيذ الثانية عشر",
+    filingDate: "21/09/1447", amountClaimed: 2200000, amountReceived: 118641.24, amountRemaining: 2081358.76,
+    docNum: "N/A", docDate: "2024-12-18",
+    requester: "البنك الاهلي السعودي (SNB)", requesterAgent: "عصام حسن علي فرغل",
+    against: "مؤسسة غدير الشرق التجارية + غدير خالد عبدالعزيز الحساوي",
+    stages: "قبول 22/09 ← إبلاغ إلكتروني 06/10 ← حجز أموال 14/10",
+    decisions: 4, creditorGroup: "snb",
+    tags: ["bank"],
+    note: "",
+    attachment: `<h4>سند لأمر - البنك الاهلي السعودي</h4><p>المتعهد: مؤسسة غدير الشرق التجارية | المبلغ: 2,200,000 ريال سعودي</p><p>الاستحقاق: لدى الاطلاع | حرر في جدة بتاريخ 17-06-1446هـ الموافق 18-12-2024م</p><p><strong>كفالة غرم وأداء تضامنية:</strong></p><p>كفيل (1): وليد احمد محمد جعبور - هوية: 1095981120</p><p>كفيل (2): غدير خالد عبدالعزيز الحساوي - هوية: 1011202627</p>`
+  },
+  {
+    id: 4, caseNum: "401014704115805", status: "active", statusAr: "قيد تنفيذ 46",
+    type: "promissory", typeAr: "سند لأمر",
+    court: "jeddah", courtAr: "محكمة التنفيذ بجدة", dept: "دائرة التنفيذ الثانية عشر",
+    filingDate: "19/09/1447", amountClaimed: 24406.31, amountReceived: 0, amountRemaining: 20338.30,
+    docNum: "24475532", docDate: "2022-09-15",
+    requester: "شركة الراجحي المصرفية للاستثمار", requesterAgent: "المنذر عبدالله اسماعيل الغانمي",
+    against: "غدير خالد عبدالعزيز الحساوي",
+    stages: "",
+    decisions: 2, creditorGroup: "rajhi",
+    tags: ["bank"],
+    note: "يتضمن ورقة اعتراض",
+    attachment: `<h4>سند لأمر - مصرف الراجحي</h4><p>المبلغ: 24,406.31 ريال سعودي | مكان الانشاء: جده | تاريخ الانشاء: 15/09/2022</p><p>محرر السند (المدين): مؤسسة غدير الشرق التجارية - سجل: 7005683292</p><p>عنوان محرر السند: شارع زينل جده</p><p>رقم الطلب: 41524085</p>`
+  },
+  {
+    id: 5, caseNum: "401014704094631", status: "active", statusAr: "قيد تنفيذ 46",
+    type: "promissory", typeAr: "سند لأمر",
+    court: "jeddah", courtAr: "محكمة التنفيذ بجدة", dept: "دائرة التنفيذ الثانية عشر",
+    filingDate: "19/09/1447", amountClaimed: 54421.68, amountReceived: 0, amountRemaining: 40816.08,
+    docNum: "24475532", docDate: "2023-09-28",
+    requester: "شركة الراجحي المصرفية للاستثمار", requesterAgent: "المنذر عبدالله اسماعيل الغانمي",
+    against: "غدير خالد عبدالعزيز الحساوي",
+    stages: "",
+    decisions: 0, creditorGroup: "rajhi",
+    tags: ["bank"],
+    note: "",
+    attachment: `<h4>سند لأمر - مصرف الراجحي</h4><p>المبلغ: 54,421.68 ريال سعودي | مكان الانشاء: جده | تاريخ الانشاء: 28/09/2023</p><p>محرر السند (المدين): مؤسسة غدير الشرق التجارية - سجل: 7005683292</p><p>عنوان: شارع زينل جده | رقم الطلب: 50526798</p>`
+  },
+  {
+    id: 6, caseNum: "401014704099510", status: "active", statusAr: "قيد تنفيذ 46",
+    type: "promissory", typeAr: "سند لأمر",
+    court: "jeddah", courtAr: "محكمة التنفيذ بجدة", dept: "دائرة التنفيذ الثانية عشر",
+    filingDate: "19/09/1447", amountClaimed: 51805.40, amountReceived: 0, amountRemaining: 30219.70,
+    docNum: "24475532", docDate: "2023-07-13",
+    requester: "شركة الراجحي المصرفية للاستثمار", requesterAgent: "المنذر عبدالله اسماعيل الغانمي",
+    against: "غدير خالد عبدالعزيز الحساوي",
+    stages: "",
+    decisions: 0, creditorGroup: "rajhi",
+    tags: ["bank"],
+    note: "",
+    attachment: `<h4>سند لأمر - مصرف الراجحي</h4><p>المبلغ: 51,805.40 ريال سعودي | مكان الانشاء: جده | تاريخ الانشاء: 13/07/2023</p><p>محرر السند (المدين): مؤسسة غدير الشرق التجارية - سجل: 7005683292</p><p>رقم الطلب: 48539575 | فرع السنابل</p>`
+  },
+  {
+    id: 7, caseNum: "401014704099513", status: "active", statusAr: "قيد تنفيذ 46",
+    type: "promissory", typeAr: "سند لأمر",
+    court: "jeddah", courtAr: "محكمة التنفيذ بجدة", dept: "دائرة التنفيذ الثانية عشر",
+    filingDate: "19/09/1447", amountClaimed: 51805.20, amountReceived: 0, amountRemaining: 51805.20,
+    docNum: "24475532", docDate: "2023-07-13",
+    requester: "شركة الراجحي المصرفية للاستثمار", requesterAgent: "المنذر عبدالله اسماعيل الغانمي",
+    against: "غدير خالد عبدالعزيز الحساوي",
+    stages: "",
+    decisions: 0, creditorGroup: "rajhi",
+    tags: ["bank"],
+    note: "",
+    attachment: `<h4>سند لأمر - مصرف الراجحي</h4><p>المبلغ: 51,805.20 ريال سعودي | مكان الانشاء: جده | تاريخ الانشاء: 13/07/2023</p><p>محرر السند (المدين): مؤسسة غدير الشرق التجارية - سجل: 7005683292</p><p>المستحق في: 05/08/2024 | رقم الطلب: 48539575</p>`
+  },
+  {
+    id: 8, caseNum: "401014704105695", status: "active", statusAr: "قيد تنفيذ 46",
+    type: "promissory", typeAr: "سند لأمر",
+    court: "jeddah", courtAr: "محكمة التنفيذ بجدة", dept: "دائرة التنفيذ الثانية عشر",
+    filingDate: "16/09/1447", amountClaimed: 32831.28, amountReceived: 0, amountRemaining: 32831.28,
+    docNum: "24475532", docDate: "2023-06-20",
+    requester: "شركة الراجحي المصرفية للاستثمار", requesterAgent: "المنذر عبدالله اسماعيل الغانمي",
+    against: "مؤسسة غدير الشرق التجارية + غدير خالد عبدالعزيز الحساوي",
+    stages: "",
+    decisions: 0, creditorGroup: "rajhi",
+    tags: ["bank"],
+    note: "",
+    attachment: `<h4>سند لأمر - مصرف الراجحي</h4><p>المبلغ: 32,831.28 ريال سعودي | مكان الانشاء: جده | تاريخ الانشاء: 20/06/2023</p><p>محرر السند: مؤسسة غدير الشرق التجارية | المستحق في: 05/07/2024</p><p>رقم الطلب: 48297704</p>`
+  },
+  {
+    id: 9, caseNum: "401014704105693", status: "active", statusAr: "قيد تنفيذ 46",
+    type: "promissory", typeAr: "سند لأمر",
+    court: "jeddah", courtAr: "محكمة التنفيذ بجدة", dept: "دائرة التنفيذ الثانية عشر",
+    filingDate: "16/09/1447", amountClaimed: 32831.76, amountReceived: 0, amountRemaining: 32831.76,
+    docNum: "24475532", docDate: "2023-06-20",
+    requester: "شركة الراجحي المصرفية للاستثمار", requesterAgent: "المنذر عبدالله اسماعيل الغانمي",
+    against: "مؤسسة غدير الشرق التجارية + غدير خالد عبدالعزيز الحساوي",
+    stages: "",
+    decisions: 0, creditorGroup: "rajhi",
+    tags: ["bank"],
+    note: "",
+    attachment: `<h4>سند لأمر - مصرف الراجحي (نسخة 1 من 2)</h4><p>المبلغ: 32,831.76 ريال سعودي | مكان الانشاء: جده | تاريخ الانشاء: 20/06/2023</p><p>محرر السند: مؤسسة غدير الشرق التجارية | المستحق عند الاطلاع</p><p>رقم الطلب: 48297704</p><p><em>نسخة ثانية (401014704105693-2): نفس المحتوى - مؤسسة غدير الشرق التجارية، 32,831.76 ريال</em></p>`
+  },
+  {
+    id: 10, caseNum: "401014704104403", status: "active", statusAr: "قيد تنفيذ 46",
+    type: "promissory", typeAr: "سند لأمر",
+    court: "jeddah", courtAr: "محكمة التنفيذ بجدة", dept: "دائرة التنفيذ الثانية عشر",
+    filingDate: "16/09/1447", amountClaimed: 34119.36, amountReceived: 0, amountRemaining: 34119.36,
+    docNum: "24475532", docDate: "2023-08-30",
+    requester: "شركة الراجحي المصرفية للاستثمار", requesterAgent: "المنذر عبدالله اسماعيل الغانمي",
+    against: "غدير خالد عبدالعزيز الحساوي",
+    stages: "",
+    decisions: 0, creditorGroup: "rajhi",
+    tags: ["bank"],
+    note: "",
+    attachment: `<h4>سند لأمر - مصرف الراجحي</h4><p>المبلغ: 34,119.36 ريال سعودي | مكان الانشاء: جده | تاريخ الانشاء: 30/08/2023</p><p>محرر السند: مؤسسة غدير الشرق التجارية | المستحق في: 05/09/2024</p><p>رقم الطلب: 49949553</p>`
+  },
+  {
+    id: 11, caseNum: "401014703734827", status: "active", statusAr: "قيد تنفيذ 46",
+    type: "promissory", typeAr: "سند لأمر",
+    court: "jeddah", courtAr: "محكمة التنفيذ بجدة", dept: "دائرة التنفيذ الثانية عشر",
+    filingDate: "03/07/1447", amountClaimed: 2250000, amountReceived: 0, amountRemaining: 2250000,
+    docNum: "N/A", docDate: "2025-02-27",
+    requester: "فهد ضيدان محمد ال سفران", requesterAgent: "",
+    against: "مؤسسة غدير الشرق التجارية + غدير خالد عبدالعزيز الحساوي",
+    stages: "",
+    decisions: 0, creditorGroup: "trade",
+    tags: ["trade"],
+    note: "عقد بيع مع Asafi General Trading (دبي) - إنكوترمز 2020",
+    attachment: `<h4>سند لأمر + عقد بيع وتسليم بضائع (Incoterms 2020)</h4><p><strong>السند:</strong> المبلغ: 2,250,000 ريال | تاريخ: 28/08/1446هـ (27/02/2025م) | مكان: جدة</p><p>محرر السند: مؤسسة غدير الشرق التجارية - س.ت: 4030319915</p><p>المستفيد (الدائن): أصافي للتجارة العامة - رخصة تجارية: 1101426 - دبي</p><p>الكفيل الغارم: غدير خالد عبدالعزيز الحساوي - هوية: 1011202627</p><hr><p><strong>العقد:</strong> عقد بيع وتسليم بضائع بين Asafi General Trading LLC (دبي) و مؤسسة غدير الشرق التجارية</p><p>عملة العقد: الدولار | بلد الوجهة: جدة - السعودية</p><p>بيانات المشتري: حي المحجر - جدة | بريد: Ahmed@GhadeerSharq.com</p><p>حساب بنكي: SA8780000618608016175394 (مصرف الراجحي)</p><p>مدة العقد: سنة واحدة متجددة | التحكيم: المحاكم السعودية المختصة</p><p>غرامة التأخير: 200$ لكل يوم تأخير</p>`
+  },
+  {
+    id: 12, caseNum: "401014703904792", status: "active", statusAr: "قيد تنفيذ 46",
+    type: "electronic", typeAr: "سند لأمر إلكتروني",
+    court: "jeddah", courtAr: "محكمة التنفيذ بجدة", dept: "دائرة التنفيذ الثانية عشر",
+    filingDate: "22/07/1447", amountClaimed: 50000, amountReceived: 0, amountRemaining: 50000,
+    docNum: "1025122524053837", docDate: "2025-12-25",
+    requester: "احمد محمد قاسم غالب", requesterAgent: "",
+    against: "غدير خالد عبدالعزيز الحساوي",
+    stages: "",
+    decisions: 0, creditorGroup: "individual",
+    tags: ["individual"],
+    note: "",
+    attachment: `<h4>سند لأمر إلكتروني - منصة نافذ</h4><p>رقم السند: 1025122524053837 | حالة السند: مستحق الدفع</p><p>تاريخ الانشاء: 5 رجب 1447هـ - 25 ديسمبر 2025 | تاريخ الاستحقاق: 8 رجب 1447هـ - 28 ديسمبر 2025</p><p>مدينة الاصدار: جدة | مدينة الوفاء: جدة</p><p>سبب انشاء السند: سلفة مستحقة | القيمة: 50,000 ريال</p><p>الدائن: أحمد محمد قاسم غالب - هوية: 1084589447</p><p>المدين: غدير خالد عبدالعزيز الحساوي - هوية: 1011202627</p>`
+  },
+  {
+    id: 13, caseNum: "401024702187430", status: "active", statusAr: "قيد تنفيذ 46",
+    type: "judgment", typeAr: "حكم صادر من المحكمة",
+    court: "jeddah", courtAr: "محكمة التنفيذ بجدة", dept: "دائرة التنفيذ الثانية عشر",
+    filingDate: "07/08/1447", amountClaimed: 28839.99, amountReceived: 0, amountRemaining: 28839.99,
+    docNum: "N/A", docDate: "2026-01-22",
+    requester: "شركة الطبيعة العربية المحدودة", requesterAgent: "رامه فيصل رمضان عناني",
+    against: "غدير خالد عبدالعزيز الحساوي",
+    stages: "",
+    decisions: 0, creditorGroup: "company",
+    tags: ["shipping"],
+    note: "حكم تجاري - خدمات شحن بحري يناير-ديسمبر 2024",
+    attachment: `<h4>صك حكم - المحكمة التجارية بجدة - الدائرة الثالثة</h4><p>صك رقم: 4731822356 | تاريخ: 1447/08/03هـ | القضية: 4772219318</p><p><strong>المدعي:</strong> شركة الطبيعة العربية المحدودة شخص واحد - سجل: 4030409954</p><p><strong>المدعى عليه:</strong> غدير خالد عبدالعزيز الحساوي - هوية: 1011202627</p><p><strong>الوقائع:</strong> تعامل تجاري لتقديم خدمات الشحن والخدمات اللوجستية والنقل البحري خلال الفترة 01/01/2024 - 31/12/2024م. المطالبة بسداد 28,839.99 ريال أجور خدمات شحن مستحقة.</p><p><strong>المنطوق:</strong> الزام المدعى عليها بدفع 28,839.99 ريال للمدعية. صدر غيابياً بعد تخلف المدعى عليها عن الحضور والنكول عن اليمين.</p><p>عضو الدائرة: احمد محمد الحارثي | رئيس الدائرة: عبدالرحمن راجح رجاء العصلاني</p>`
+  },
+  {
+    id: 14, caseNum: "401014704003874", status: "active", statusAr: "قيد تنفيذ 46",
+    type: "promissory", typeAr: "سند لأمر",
+    court: "riyadh", courtAr: "محكمة التنفيذ بالرياض", dept: "دائرة التنفيذ السابعة عشر",
+    filingDate: "18/08/1447", amountClaimed: 668000, amountReceived: 291256, amountRemaining: 376744,
+    docNum: "N/A", docDate: "2024-09-02",
+    requester: "مشاري نشاء ناشي النفيعى", requesterAgent: "",
+    against: "غدير خالد عبدالعزيز الحساوي",
+    stages: "",
+    decisions: 0, creditorGroup: "riyad",
+    tags: ["bank"],
+    note: "قرض شخصي - بنك الرياض",
+    attachment: `<h4>سند لأمر - بنك الرياض</h4><p>رقم الطلب: 26048457435 | حساب القرض</p><p>المبلغ: 668,000 ريال سعودي | مكان الانشاء: الرياض | تاريخ: 29/02/1446هـ - 9/2/2024م | فرع #225</p><p>المتعهد: غدير خالد عبدالعزيز الحساوي - عنوان: جدة</p><p>المستفيد: بنك الرياض</p>`
+  },
+  {
+    id: 15, caseNum: "401014704028087", status: "active", statusAr: "قيد تنفيذ 46",
+    type: "electronic", typeAr: "سند لأمر إلكتروني",
+    court: "riyadh", courtAr: "محكمة التنفيذ بالرياض", dept: "دائرة التنفيذ السابعة عشر",
+    filingDate: "24/08/1447", amountClaimed: 200000, amountReceived: 72500.30, amountRemaining: 127499.70,
+    docNum: "101708238049403", docDate: "2023-08-17",
+    requester: "عبدالرحمن عبدالله عبدالرحمن الجاسر", requesterAgent: "",
+    against: "غدير خالد عبدالعزيز الحساوي",
+    stages: "",
+    decisions: 0, creditorGroup: "individual",
+    tags: ["individual", "trade"],
+    note: "شراء بضاعة بالأجل - شركة وفرة للصناعة",
+    attachment: `<h4>سند لأمر إلكتروني - منصة نافذ</h4><p>رقم السند: 101708238049403 | حالة: مستحق الدفع</p><p>تاريخ الانشاء: 1 صفر 1445هـ - 17 اغسطس 2023 | تاريخ الاستحقاق: 1 سبتمبر 2024</p><p>مدينة الاصدار: الرياض | مدينة الوفاء: الرياض</p><p>سبب الانشاء: شراء بضاعة بالأجل | القيمة: 200,000 ريال</p><p>الدائن: شركة وفرة للصناعة والتنمية (مساهمة مدرجة) - رقم موحد: 7001345425</p><p>المدين: غدير خالد عبدالعزيز الحساوي - هوية: 1011202627</p>`
+  },
+  {
+    id: 16, caseNum: "401014704084947", status: "active", statusAr: "قيد تنفيذ 46",
+    type: "promissory", typeAr: "سند لأمر",
+    court: "riyadh", courtAr: "محكمة التنفيذ بالرياض", dept: "دائرة التنفيذ السابعة عشر",
+    filingDate: "12/09/1447", amountClaimed: 1943692.56, amountReceived: 0, amountRemaining: 1943692.56,
+    docNum: "24475532", docDate: "2024-12-15",
+    requester: "شركة الراجحي المصرفية للاستثمار", requesterAgent: "المنذر عبدالله اسماعيل الغانمي",
+    against: "غدير خالد عبدالعزيز الحساوي",
+    stages: "",
+    decisions: 0, creditorGroup: "rajhi",
+    tags: ["bank"],
+    note: "أكبر سند راجحي - ضمانات من كلا المؤسستين",
+    attachment: `<h4>سند لأمر - مصرف الراجحي (الأكبر)</h4><p>المبلغ: 1,943,692.56 ريال سعودي | مكان الانشاء: الرياض | تاريخ: 2024-12-15م</p><p><strong>كفيل غارم (1):</strong> مؤسسة خالد عبد العزيز الحساوي للتجارة - سجل: 4030060215 - رقم موحد: 7002496375</p><p><strong>كفيل غارم (2):</strong> مؤسسة خالد عبد العزيز الحساوي للتجارة - سجل مدني: 1011202627</p><p><strong>كفيل غارم (3):</strong> مؤسسة غدير الشرق التجارية - سجل: 403019915 - رقم موحد: 7005689292</p><p>المستفيد: مصرف الراجحي - سجل: 7000102744 / 1010000096</p>`
+  },
+  {
+    id: 17, caseNum: "401014704089841", status: "active", statusAr: "قيد تنفيذ 46",
+    type: "promissory", typeAr: "سند لأمر",
+    court: "riyadh", courtAr: "محكمة التنفيذ بالرياض", dept: "دائرة التنفيذ السابعة عشر",
+    filingDate: "13/09/1447", amountClaimed: 699986.30, amountReceived: 0, amountRemaining: 699986.30,
+    docNum: "24475532", docDate: "2024-05-28",
+    requester: "شركة الراجحي المصرفية للاستثمار", requesterAgent: "المنذر عبدالله اسماعيل الغانمي",
+    against: "غدير خالد عبدالعزيز الحساوي",
+    stages: "",
+    decisions: 0, creditorGroup: "rajhi",
+    tags: ["bank"],
+    note: "",
+    attachment: `<h4>سند لأمر - مصرف الراجحي</h4><p>المبلغ: 699,986.30 ريال سعودي | مكان الانشاء: الرياض | تاريخ: 2024-05-28م</p><p>محرر السند (المدين): مؤسسة غدير الشرق للتجارة - سجل: 4030319915 - رقم موحد: 7005683292</p><p>كفيل غارم: غدير خالد عبدالعزيز الحساوي - هوية: 1011202627</p><p>كفيل غارم: مؤسسة غدير خالد عبدالعزيز الحساوي للتجارة - سجل: 4030319915</p><p>عنوان: النزلة اليمانية, 2990, جدة | المستحق عند الاطلاع</p>`
+  },
+  {
+    id: 18, caseNum: "401014704091034", status: "refused", statusAr: "تم الإمتناع",
+    type: "promissory", typeAr: "سند لأمر",
+    court: "madinah", courtAr: "محكمة التنفيذ بالمدينة المنورة", dept: "دائرة التنفيذ السادسة",
+    filingDate: "13/09/1447", amountClaimed: 61867.68, amountReceived: 0, amountRemaining: 61867.68,
+    docNum: "29535383", docDate: "2025-08-03",
+    requester: "شركة الراجحي المصرفية للاستثمار", requesterAgent: "المنذر عبدالله اسماعيل الغانمي",
+    against: "غدير خالد عبدالعزيز الحساوي",
+    stages: "",
+    decisions: 0, creditorGroup: "rajhi",
+    tags: ["bank"],
+    note: "",
+    attachment: `<p>لا يوجد مرفق محلل لهذه القضية (تم الامتناع)</p>`
+  },
+  {
+    id: 19, caseNum: "401014704091036", status: "refused", statusAr: "تم الإمتناع",
+    type: "promissory", typeAr: "سند لأمر",
+    court: "madinah", courtAr: "محكمة التنفيذ بالمدينة المنورة", dept: "دائرة التنفيذ السادسة",
+    filingDate: "13/09/1447", amountClaimed: 61867.68, amountReceived: 0, amountRemaining: 61867.68,
+    docNum: "29535383", docDate: "2025-08-03",
+    requester: "شركة الراجحي المصرفية للاستثمار", requesterAgent: "المنذر عبدالله اسماعيل الغانمي",
+    against: "غدير خالد عبدالعزيز الحساوي",
+    stages: "",
+    decisions: 0, creditorGroup: "rajhi",
+    tags: ["bank", "duplicate"],
+    note: "مكرر مع القضية 18 - نفس رقم المستند والمبلغ والتاريخ",
+    attachment: `<p>مكرر مع القضية 18 - نفس المستند 29535383 والمبلغ 61,867.68 ريال. كلاهما تم الامتناع.</p>`
+  },
+  {
+    id: 20, caseNum: "401014704091030", status: "active", statusAr: "قيد تنفيذ 46",
+    type: "promissory", typeAr: "سند لأمر",
+    court: "madinah", courtAr: "محكمة التنفيذ بالمدينة المنورة", dept: "دائرة التنفيذ السادسة",
+    filingDate: "13/09/1447", amountClaimed: 61867.68, amountReceived: 0, amountRemaining: 61867.68,
+    docNum: "29535383", docDate: "2025-08-03",
+    requester: "شركة الراجحي المصرفية للاستثمار", requesterAgent: "المنذر عبدالله اسماعيل الغانمي",
+    against: "غدير خالد عبدالعزيز الحساوي",
+    stages: "",
+    decisions: 0, creditorGroup: "rajhi",
+    tags: ["bank", "fleet"],
+    note: "نفس المستند كالقضايا 18 و 19 لكن هذه مقبولة",
+    attachment: `<h4>سند لأمر - مصرف الراجحي (المدينة المنورة)</h4><p>المبلغ: 61,867.68 ريال سعودي | مكان الانشاء: المدينة المنورة | تاريخ: 2023/08/03</p><p>محرر السند (المدين): محامص عدوي للمكسرات - سجل: 4650265113 - رقم موحد: 7037251084</p><p>رقم العقد: ARB-000000108891-FLEET</p><p>كفيل غارم (1): مؤسسة غدير خالد عبدالعزيز الحساوي للتجارة - سجل: 4030604215</p><p>كفيل غارم (2): مؤسسة غدير خالد عبدالعزيز الحساوي للتجارة (نفسه)</p>`
+  },
+  {
+    id: 21, caseNum: "401014704094635", status: "active", statusAr: "قيد تنفيذ 46",
+    type: "promissory", typeAr: "سند لأمر",
+    court: "jeddah", courtAr: "محكمة التنفيذ بجدة", dept: "دائرة التنفيذ الثانية عشر",
+    filingDate: "14/09/1447", amountClaimed: 54421.44, amountReceived: 0, amountRemaining: 54421.44,
+    docNum: "24475532", docDate: "2023-09-28",
+    requester: "شركة الراجحي المصرفية للاستثمار", requesterAgent: "المنذر عبدالله اسماعيل الغانمي",
+    against: "غدير خالد عبدالعزيز الحساوي",
+    stages: "",
+    decisions: 0, creditorGroup: "rajhi",
+    tags: ["bank"],
+    note: "",
+    attachment: `<h4>سند لأمر - مصرف الراجحي</h4><p>المبلغ: 54,421.44 ريال | مكان الانشاء: جده | تاريخ: 28/09/2023</p><p>محرر السند: مؤسسة غدير الشرق التجارية - سجل: 7005683292</p><p>المستحق في: 05/10/2024 | رقم الطلب: 50526798</p>`
+  },
+  {
+    id: 22, caseNum: "401014704095086", status: "active", statusAr: "قيد تنفيذ 46",
+    type: "promissory", typeAr: "سند لأمر",
+    court: "jeddah", courtAr: "محكمة التنفيذ بجدة", dept: "دائرة التنفيذ الثانية عشر",
+    filingDate: "14/09/1447", amountClaimed: 37758.36, amountReceived: 0, amountRemaining: 25171.92,
+    docNum: "24475532", docDate: "2023-08-30",
+    requester: "شركة الراجحي المصرفية للاستثمار", requesterAgent: "المنذر عبدالله اسماعيل الغانمي",
+    against: "غدير خالد عبدالعزيز الحساوي",
+    stages: "",
+    decisions: 0, creditorGroup: "rajhi",
+    tags: ["bank"],
+    note: "",
+    attachment: `<h4>سند لأمر - مصرف الراجحي</h4><p>المبلغ: 37,758.36 ريال | مكان الانشاء: جده | تاريخ: 30/08/2023</p><p>محرر السند: مؤسسة غدير الشرق التجارية - سجل: 7005683292</p><p>المستحق عند الاطلاع | رقم الطلب: 49832799</p>`
+  },
+  {
+    id: 23, caseNum: "401014704095088", status: "active", statusAr: "قيد تنفيذ 46",
+    type: "promissory", typeAr: "سند لأمر",
+    court: "jeddah", courtAr: "محكمة التنفيذ بجدة", dept: "دائرة التنفيذ الثانية عشر",
+    filingDate: "14/09/1447", amountClaimed: 37757.88, amountReceived: 0, amountRemaining: 37757.88,
+    docNum: "24475532", docDate: "2023-08-30",
+    requester: "شركة الراجحي المصرفية للاستثمار", requesterAgent: "المنذر عبدالله اسماعيل الغانمي",
+    against: "غدير خالد عبدالعزيز الحساوي",
+    stages: "",
+    decisions: 0, creditorGroup: "rajhi",
+    tags: ["bank"],
+    note: "",
+    attachment: `<h4>سند لأمر - مصرف الراجحي</h4><p>المبلغ: 37,757.88 ريال | مكان الانشاء: جده | تاريخ: 30/08/2023</p><p>محرر السند: مؤسسة غدير الشرق التجارية | المستحق في: 05/09/2024</p><p>رقم الطلب: 49832799</p>`
+  },
+  {
+    id: 24, caseNum: "401014704098729", status: "active", statusAr: "قيد تنفيذ 46",
+    type: "promissory", typeAr: "سند لأمر",
+    court: "jeddah", courtAr: "محكمة التنفيذ بجدة", dept: "دائرة التنفيذ الثانية عشر",
+    filingDate: "15/09/1447", amountClaimed: 85414.11, amountReceived: 0, amountRemaining: 42706.98,
+    docNum: "24475532", docDate: "2023-06-20",
+    requester: "شركة الراجحي المصرفية للاستثمار", requesterAgent: "المنذر عبدالله اسماعيل الغانمي",
+    against: "مؤسسة غدير الشرق التجارية + غدير خالد عبدالعزيز الحساوي",
+    stages: "",
+    decisions: 0, creditorGroup: "rajhi",
+    tags: ["bank"],
+    note: "",
+    attachment: `<h4>سند لأمر - مصرف الراجحي</h4><p>المبلغ: 85,414.11 ريال | مكان الانشاء: جده | تاريخ: 20/06/2023</p><p>محرر السند: مؤسسة غدير الشرق التجارية - سجل: 7005683292</p><p>المستحق عند الاطلاع | رقم الطلب: 48227691</p>`
+  },
+  {
+    id: 25, caseNum: "401014704098748", status: "active", statusAr: "قيد تنفيذ 46",
+    type: "promissory", typeAr: "سند لأمر",
+    court: "jeddah", courtAr: "محكمة التنفيذ بجدة", dept: "دائرة التنفيذ الثانية عشر",
+    filingDate: "15/09/1447", amountClaimed: 85413.96, amountReceived: 0, amountRemaining: 85413.96,
+    docNum: "24475532", docDate: "2023-06-20",
+    requester: "شركة الراجحي المصرفية للاستثمار", requesterAgent: "المنذر عبدالله اسماعيل الغانمي",
+    against: "مؤسسة غدير الشرق التجارية + غدير خالد عبدالعزيز الحساوي",
+    stages: "",
+    decisions: 0, creditorGroup: "rajhi",
+    tags: ["bank"],
+    note: "",
+    attachment: `<h4>سند لأمر - مصرف الراجحي</h4><p>المبلغ: 85,413.96 ريال | مكان: جده | تاريخ: 20/06/2023</p><p>محرر السند: مؤسسة غدير الشرق التجارية | المستحق في: 05/07/2024</p><p>رقم الطلب: 48227691</p>`
+  },
+  {
+    id: 26, caseNum: "401014704098768", status: "active", statusAr: "قيد تنفيذ 46",
+    type: "promissory", typeAr: "سند لأمر",
+    court: "jeddah", courtAr: "محكمة التنفيذ بجدة", dept: "دائرة التنفيذ الثانية عشر",
+    filingDate: "15/09/1447", amountClaimed: 120619.92, amountReceived: 0, amountRemaining: 120619.92,
+    docNum: "24475532", docDate: "2024-07-07",
+    requester: "شركة الراجحي المصرفية للاستثمار", requesterAgent: "المنذر عبدالله اسماعيل الغانمي",
+    against: "غدير خالد عبدالعزيز الحساوي",
+    stages: "",
+    decisions: 0, creditorGroup: "rajhi",
+    tags: ["bank"],
+    note: "",
+    attachment: `<h4>سند لأمر - مصرف الراجحي (توجيه 21125)</h4><p>المبلغ: 120,619.92 ريال | مكان: جده | تاريخ: 2024/07/07</p><p>محرر السند: مؤسسة غدير الشرق التجارية - سجل: 4030319915 - رقم موحد: 7005683292</p><p>عنوان: حي النزلة اليمنية, شارع زينل, جده | المفوض: غدير خالد - هوية: 1011202627</p><p>كفيل غارم (1): غدير خالد - كفيل غارم (2): مؤسسة غدير خالد للتجارة - سجل: 4030604215</p>`
+  },
+  {
+    id: 27, caseNum: "401014704098777", status: "active", statusAr: "قيد تنفيذ 46",
+    type: "promissory", typeAr: "سند لأمر",
+    court: "jeddah", courtAr: "محكمة التنفيذ بجدة", dept: "دائرة التنفيذ الثانية عشر",
+    filingDate: "15/09/1447", amountClaimed: 133048.56, amountReceived: 0, amountRemaining: 133048.56,
+    docNum: "24475532", docDate: "2024-07-07",
+    requester: "شركة الراجحي المصرفية للاستثمار", requesterAgent: "المنذر عبدالله اسماعيل الغانمي",
+    against: "غدير خالد عبدالعزيز الحساوي",
+    stages: "",
+    decisions: 0, creditorGroup: "rajhi",
+    tags: ["bank"],
+    note: "",
+    attachment: `<h4>سند لأمر - مصرف الراجحي (توجيه 21125)</h4><p>المبلغ: 133,048.56 ريال | مكان: جدة | تاريخ: 2024/07/07</p><p>محرر السند: مؤسسة غدير الشرق التجارية - سجل: 4030319915 - رقم موحد: 7005683292</p><p>كفيل غارم (1): غدير خالد - هوية: 1011202627 | كفيل غارم (2): مؤسسة غدير خالد - سجل: 4030604215</p>`
+  },
+  {
+    id: 28, caseNum: "401014704098786", status: "active", statusAr: "قيد تنفيذ 46",
+    type: "promissory", typeAr: "سند لأمر",
+    court: "jeddah", courtAr: "محكمة التنفيذ بجدة", dept: "دائرة التنفيذ الثانية عشر",
+    filingDate: "15/09/1447", amountClaimed: 133048.56, amountReceived: 0, amountRemaining: 133048.56,
+    docNum: "24475532", docDate: "2024-07-07",
+    requester: "شركة الراجحي المصرفية للاستثمار", requesterAgent: "المنذر عبدالله اسماعيل الغانمي",
+    against: "غدير خالد عبدالعزيز الحساوي",
+    stages: "",
+    decisions: 0, creditorGroup: "rajhi",
+    tags: ["bank"],
+    note: "",
+    attachment: `<h4>سند لأمر - مصرف الراجحي (توجيه 21125)</h4><p>المبلغ: 133,048.56 ريال | مكان: جدة | تاريخ: 2024/07/07</p><p>محرر السند: مؤسسة غدير الشرق التجارية - سجل: 4030319915 | عنوان: حي النزلة اليمنية</p><p>كفيل غارم (1): غدير خالد | كفيل غارم (2): مؤسسة غدير خالد - سجل: 4030604215</p>`
+  },
+  {
+    id: 29, caseNum: "401014704100344", status: "active", statusAr: "قيد تنفيذ 46",
+    type: "promissory", typeAr: "سند لأمر",
+    court: "jeddah", courtAr: "محكمة التنفيذ بجدة", dept: "دائرة التنفيذ الثانية عشر",
+    filingDate: "15/09/1447", amountClaimed: 174414.84, amountReceived: 0, amountRemaining: 174414.84,
+    docNum: "244755321", docDate: "2025-05-14",
+    requester: "شركة الراجحي المصرفية للاستثمار", requesterAgent: "المنذر عبدالله اسماعيل الغانمي",
+    against: "غدير خالد عبدالعزيز الحساوي",
+    stages: "",
+    decisions: 0, creditorGroup: "rajhi",
+    tags: ["bank", "fleet"],
+    note: "",
+    attachment: `<h4>سند لأمر - مصرف الراجحي (توجيه 21125)</h4><p>المبلغ: 174,414.84 ريال | تاريخ: 2025/05/14 | مكان: جدة</p><p>رقم العقد: ARB-000000100372-FLEET</p><p>محرر السند: مؤسسة غدير الشرق للتجارة - سجل: 4030319915</p><p>كفيل غارم (1): غدير خالد - كفيل غارم (2): مؤسسة غدير خالد - سجل: 4030604215</p><p>كفيل غارم (3): مؤسسة غدير الشرق - سجل: 4030319915</p>`
+  },
+  {
+    id: 30, caseNum: "401014704104400", status: "active", statusAr: "قيد تنفيذ 46",
+    type: "promissory", typeAr: "سند لأمر",
+    court: "jeddah", courtAr: "محكمة التنفيذ بجدة", dept: "دائرة التنفيذ الثانية عشر",
+    filingDate: "16/09/1447", amountClaimed: 34119.52, amountReceived: 0, amountRemaining: 22746.24,
+    docNum: "24475532", docDate: "2023-08-30",
+    requester: "شركة الراجحي المصرفية للاستثمار", requesterAgent: "المنذر عبدالله اسماعيل الغانمي",
+    against: "مؤسسة غدير الشرق التجارية + غدير خالد عبدالعزيز الحساوي",
+    stages: "",
+    decisions: 0, creditorGroup: "rajhi",
+    tags: ["bank"],
+    note: "",
+    attachment: `<h4>سند لأمر - مصرف الراجحي</h4><p>المبلغ: 34,119.52 ريال | مكان: جدة | تاريخ: 30/08/2023</p><p>محرر السند: مؤسسة غدير الشرق التجارية | المستحق عند الاطلاع | رقم الطلب: 49949553</p>`
+  },
+  {
+    id: 31, caseNum: "4140666201", status: "completed", statusAr: "منتهي",
+    type: "promissory", typeAr: "سند لأمر",
+    court: "jeddah", courtAr: "محكمة التنفيذ بجدة", dept: "دائرة التنفيذ العاشرة",
+    filingDate: "02/06/1441", amountClaimed: 100000, amountReceived: 0, amountRemaining: 100000,
+    docNum: "0", docDate: "2019-09-12",
+    requester: "سلطان عطيه هادي المصلوخي", requesterAgent: "",
+    against: "مستودع غدير خالد الحساوي للحلويات والمكسرات + غدير خالد عبدالعزيز",
+    stages: "", decisions: 0, creditorGroup: "individual", tags: ["individual"], note: "", attachment: ""
+  },
+  {
+    id: 32, caseNum: "401014200486298", status: "completed", statusAr: "منتهي",
+    type: "promissory", typeAr: "سند لأمر",
+    court: "jeddah", courtAr: "محكمة التنفيذ بجدة", dept: "دائرة التنفيذ الثانية والعشرون",
+    filingDate: "24/07/1442", amountClaimed: 50000, amountReceived: 0, amountRemaining: 50000,
+    docNum: "", docDate: "2020-06-25",
+    requester: "هيثم هشام عبدالحميد الحلواني", requesterAgent: "",
+    against: "مؤسسة غدير الشرق التجارية + غدير خالد عبدالعزيز الحساوي",
+    stages: "", decisions: 0, creditorGroup: "individual", tags: ["individual"], note: "", attachment: ""
+  },
+  {
+    id: 33, caseNum: "401044400980037", status: "completed", statusAr: "منتهي",
+    type: "rental", typeAr: "عقد إيجار موحد",
+    court: "jeddah", courtAr: "محكمة التنفيذ بجدة", dept: "دائرة التنفيذ السابعة والعشرون",
+    filingDate: "17/10/1444", amountClaimed: 209001, amountReceived: 0, amountRemaining: 209001,
+    docNum: "20643839137", docDate: "2020-02-20",
+    requester: "الوليد حمد ناصر بن زومان", requesterAgent: "",
+    against: "مؤسسة غدير خالد الحساوي للتجارة + غدير خالد عبدالعزيز",
+    stages: "", decisions: 0, creditorGroup: "individual", tags: ["individual"], note: "عقد إيجار", attachment: ""
+  },
+  {
+    id: 34, caseNum: "401014502117141", status: "completed", statusAr: "منتهي",
+    type: "promissory", typeAr: "سند لأمر",
+    court: "jeddah", courtAr: "محكمة التنفيذ بجدة", dept: "دائرة التنفيذ الثامنة عشر",
+    filingDate: "11/11/1445", amountClaimed: 200000, amountReceived: 142995, amountRemaining: 57005,
+    docNum: "0", docDate: "2023-12-27",
+    requester: "خالد عمر عبدالرحمن العطاس", requesterAgent: "",
+    against: "غدير خالد عبدالعزيز الحساوي",
+    stages: "", decisions: 0, creditorGroup: "individual", tags: ["individual"], note: "", attachment: ""
+  },
+  {
+    id: 35, caseNum: "401014502201532", status: "completed", statusAr: "منتهي",
+    type: "electronic", typeAr: "سند لأمر إلكتروني",
+    court: "riyadh", courtAr: "محكمة التنفيذ بالرياض", dept: "دائرة التنفيذ الثانية والعشرون",
+    filingDate: "24/12/1445", amountClaimed: 200000, amountReceived: 162969, amountRemaining: 37031,
+    docNum: "101102235998611", docDate: "2023-02-11",
+    requester: "عبدالله سعود عبدالله السعيد", requesterAgent: "",
+    against: "غدير خالد عبدالعزيز الحساوي",
+    stages: "", decisions: 0, creditorGroup: "individual", tags: ["individual"], note: "", attachment: ""
+  },
+  {
+    id: 36, caseNum: "401014602353825", status: "completed", statusAr: "منتهي",
+    type: "electronic", typeAr: "سند لأمر إلكتروني",
+    court: "jeddah", courtAr: "محكمة التنفيذ بجدة", dept: "دائرة التنفيذ السابعة عشر",
+    filingDate: "21/02/1446", amountClaimed: 31280, amountReceived: 0, amountRemaining: 31280,
+    docNum: "111511239162378", docDate: "2023-11-15",
+    requester: "هشام علي بن محمد هزازي", requesterAgent: "",
+    against: "غدير خالد عبدالعزيز الحساوي",
+    stages: "", decisions: 0, creditorGroup: "individual", tags: ["individual"], note: "", attachment: ""
+  },
+  {
+    id: 37, caseNum: "401014602353829", status: "completed", statusAr: "منتهي",
+    type: "electronic", typeAr: "سند لأمر إلكتروني",
+    court: "jeddah", courtAr: "محكمة التنفيذ بجدة", dept: "دائرة التنفيذ السابعة عشر",
+    filingDate: "21/02/1446", amountClaimed: 31280, amountReceived: 0, amountRemaining: 31280,
+    docNum: "111511239162395", docDate: "2023-11-15",
+    requester: "هشام علي بن محمد هزازي", requesterAgent: "",
+    against: "غدير خالد عبدالعزيز الحساوي",
+    stages: "", decisions: 0, creditorGroup: "individual", tags: ["individual"], note: "", attachment: ""
+  },
+  {
+    id: 38, caseNum: "401014602618377", status: "grace", statusAr: "تم الإمهال",
+    type: "electronic", typeAr: "سند لأمر إلكتروني",
+    court: "jeddah", courtAr: "محكمة التنفيذ بجدة", dept: "دائرة التنفيذ التاسعة عشر",
+    filingDate: "22/05/1446", amountClaimed: 31280, amountReceived: 0, amountRemaining: 31280,
+    docNum: "111511239162440", docDate: "2023-11-15",
+    requester: "هشام علي بن محمد هزازي", requesterAgent: "",
+    against: "غدير خالد عبدالعزيز الحساوي",
+    stages: "", decisions: 0, creditorGroup: "individual", tags: ["individual"], note: "", attachment: ""
+  },
+  {
+    id: 39, caseNum: "402024600902953", status: "completed", statusAr: "منتهي",
+    type: "rental", typeAr: "عقد إيجار موحد (تنفيذ مباشر)",
+    court: "madinah", courtAr: "محكمة التنفيذ بالمدينة المنورة", dept: "دائرة التنفيذ الرابعة",
+    filingDate: "29/05/1446", amountClaimed: 0, amountReceived: 0, amountRemaining: 0,
+    docNum: "20702468849", docDate: "",
+    requester: "بخيت سلامه حمدان النزاوي", requesterAgent: "",
+    against: "مؤسسة غدير الشرق التجارية + غدير خالد الحساوي",
+    stages: "", decisions: 0, creditorGroup: "individual", tags: ["individual"], note: "قضية إخلاء", attachment: ""
+  },
+  {
+    id: 40, caseNum: "401024702058928", status: "completed", statusAr: "منتهي",
+    type: "judgment", typeAr: "حكم صادر من المحكمة",
+    court: "jeddah", courtAr: "محكمة التنفيذ بجدة", dept: "دائرة التنفيذ الثانية عشر",
+    filingDate: "08/05/1447", amountClaimed: 38695.48, amountReceived: 0, amountRemaining: 38695.48,
+    docNum: "N/A", docDate: "2025-10-30",
+    requester: "جابر يسلم مبارك سعود", requesterAgent: "",
+    against: "غدير خالد عبدالعزيز الحساوي",
+    stages: "", decisions: 0, creditorGroup: "individual", tags: ["individual"], note: "", attachment: ""
+  },
+  {
+    id: 41, caseNum: "401014703673628", status: "active", statusAr: "قيد تنفيذ 46",
+    type: "promissory", typeAr: "سند لأمر",
+    court: "riyadh", courtAr: "محكمة التنفيذ بالرياض", dept: "دائرة التنفيذ السابعة عشر",
+    filingDate: "14/05/1447", amountClaimed: 3000000, amountReceived: 0, amountRemaining: 3000000,
+    docNum: "00", docDate: "2025-01-30",
+    requester: "حمد بن عبدالرحمن بن حمد السبيعي", requesterAgent: "",
+    against: "مؤسسة غدير خالد الحساوي للتجارة + غدير خالد عبدالعزيز الحساوي",
+    stages: "",
+    decisions: 0, creditorGroup: "subaie",
+    tags: ["individual"],
+    note: "",
+    attachment: `<h4>سند لأمر - حمد السبيعي</h4><p>مكان الانشاء: جدة | تاريخ: 2025/01/30م | القيمة: 3,000,000 ريال سعودي</p><p>(فقط ثلاثة ملايين ريال سعودي لا غير) | الاستحقاق: لدى الاطلاع</p><p>المتعهد: مؤسسة غدير خالد عبدالعزيز الحساوي للتجارة - سجل: 4030604215 - رقم موحد: 7002496375</p><p>المستفيد: بنك الخليج الدولي-السعودية - سجل: 2050019200 - رقم موحد: 7001399042</p><p><strong>ضمان:</strong> غدير بنت خالد بن عبدالعزيز الحساوي - هوية: 1011202627</p>`
+  },
+  {
+    id: 42, caseNum: "401014703673645", status: "active", statusAr: "قيد تنفيذ 46",
+    type: "promissory", typeAr: "سند لأمر",
+    court: "riyadh", courtAr: "محكمة التنفيذ بالرياض", dept: "دائرة التنفيذ السابعة عشر",
+    filingDate: "14/05/1447", amountClaimed: 3000000, amountReceived: 0, amountRemaining: 3000000,
+    docNum: "00", docDate: "2025-01-30",
+    requester: "حمد بن عبدالرحمن بن حمد السبيعي", requesterAgent: "",
+    against: "غدير خالد عبدالعزيز الحساوي",
+    stages: "",
+    decisions: 0, creditorGroup: "subaie",
+    tags: ["individual"],
+    note: "نفس الطالب والمبلغ كالقضية 41 - واحدة ضد المؤسسة+الفرد والأخرى ضد الفرد فقط",
+    attachment: `<h4>سند لأمر - حمد السبيعي (القضية الثانية)</h4><p>مكان الانشاء: جدة | تاريخ: 2025/01/30م | القيمة: 3,000,000 ريال سعودي</p><p>المتعهد: مؤسسة غدير خالد عبدالعزيز الحساوي للتجارة - سجل: 4030604215 - رقم موحد: 7002496375</p><p>المستفيد: بنك الخليج الدولي-السعودية</p><p><strong>ضمان:</strong> غدير بنت خالد بن عبدالعزيز الحساوي - هوية: 1011202627</p>`
+  },
+  {
+    id: 43, caseNum: "401014703742493", status: "active", statusAr: "قيد تنفيذ 46",
+    type: "promissory", typeAr: "سند لأمر",
+    court: "jeddah", courtAr: "محكمة التنفيذ بجدة", dept: "دائرة التنفيذ الثانية عشر",
+    filingDate: "04/06/1447", amountClaimed: 200000, amountReceived: 0, amountRemaining: 37324.56,
+    docNum: "N/A", docDate: "2023-06-22",
+    requester: "علي مناجي علي جعفري (شركة مجموعة روما التجارية)", requesterAgent: "",
+    against: "مؤسسة غدير الشرق التجارية + غدير خالد عبدالعزيز الحساوي",
+    stages: "",
+    decisions: 0, creditorGroup: "company",
+    tags: ["trade"],
+    note: "مجموعة روما التجارية",
+    attachment: `<h4>سند لأمر - مجموعة روما التجارية</h4><p>مكان الاصدار: جدة | تاريخ السند: 2023/6/22 | الاستحقاق: عند الاعتماد</p><p>مبلغ السند: 200,000 ريال سعودي</p><p>المستفيد: شركة مجموعة روما التجارية</p><p>محرر السند: مؤسسة غدير الشرق التجارية - سجل: 4030319915</p><p>العنوان: جدة - المحجر - شارع سوق الصواريخ</p><p>الاسم: محمد خالد عبد العزيز الحساوي</p><p>ROMA TRADING GROUP - المركز الرئيسي: 7284 العالمية بزنس بارك، طريق الأمير سلطان، حي النهضة، جدة</p>`
+  },
+  {
+    id: 44, caseNum: "401014703791824", status: "executed", statusAr: "تم التنفيذ",
+    type: "promissory", typeAr: "سند لأمر",
+    court: "dammam", courtAr: "محكمة التنفيذ بالدمام", dept: "دائرة التنفيذ السادسة",
+    filingDate: "18/06/1447", amountClaimed: 670413, amountReceived: 549246, amountRemaining: 121167,
+    docNum: "1", docDate: "2023-01-08",
+    requester: "فهد عبدالكريم عسكر الشمري", requesterAgent: "",
+    against: "مؤسسة غدير الشرق التجارية + غدير خالد عبدالعزيز الحساوي",
+    stages: "", decisions: 0, creditorGroup: "individual", tags: ["individual"], note: "", attachment: ""
+  }
+];
+
+// ===== HELPER FUNCTIONS =====
+function fmt(n) {
+  if (n === 0 || n === null || n === undefined) return '0';
+  return new Intl.NumberFormat('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 2}).format(n);
+}
+function fmtSAR(n) { return fmt(n) + ' SAR'; }
+
+function getStatusBadge(status) {
+  const map = {
+    active: { cls: 'badge-active', text: 'قيد التنفيذ (46)' },
+    completed: { cls: 'badge-completed', text: 'منتهي' },
+    refused: { cls: 'badge-refused', text: 'تم الامتناع' },
+    grace: { cls: 'badge-grace', text: 'تم الامهال' },
+    executed: { cls: 'badge-executed', text: 'تم التنفيذ' }
+  };
+  const s = map[status] || map.active;
+  return `<span class="badge ${s.cls}">${s.text}</span>`;
+}
+
+function getTagHTML(tag) {
+  const map = {
+    bank: { cls: 'bank', text: 'بنك' },
+    individual: { cls: 'individual', text: 'أفراد' },
+    trade: { cls: 'trade', text: 'تجارة/استيراد' },
+    shipping: { cls: 'shipping', text: 'شحن/لوجستيات' },
+    fleet: { cls: 'fleet', text: 'أسطول/مركبات' },
+    duplicate: { cls: 'duplicate', text: 'مكرر' }
+  };
+  const t = map[tag] || { cls: '', text: tag };
+  return `<span class="tag ${t.cls}">${t.text}</span>`;
+}
+
+function getCreditorLabel(group) {
+  const map = {
+    rajhi: 'الراجحي', snb: 'الأهلي السعودي', riyad: 'بنك الرياض',
+    subaie: 'حمد السبيعي', trade: 'تجارة دولية', individual: 'أفراد',
+    company: 'شركات'
+  };
+  return map[group] || group;
+}
+
+// ===== FILTER STATE =====
+let activeFilters = { creditor: null, status: null, court: null, type: null, tag: null, search: '' };
+
+function getFilterCounts() {
+  const counts = { creditor: {}, status: {}, court: {}, type: {}, tag: {} };
+  const creditorMap = { rajhi: 'الراجحي', snb: 'الأهلي', riyad: 'بنك الرياض', subaie: 'حمد السبيعي', individual: 'أفراد', company: 'شركات', trade: 'تجارة دولية' };
+  const statusMap = { active: 'قيد التنفيذ', completed: 'منتهي', refused: 'تم الامتناع', grace: 'تم الامهال', executed: 'تم التنفيذ' };
+  const courtMap = { jeddah: 'جدة', riyadh: 'الرياض', madinah: 'المدينة', dammam: 'الدمام' };
+  const typeMap = { promissory: 'سند لأمر', electronic: 'سند إلكتروني', judgment: 'حكم', rental: 'عقد إيجار' };
+  const tagMap = { bank: 'بنك', individual: 'أفراد', trade: 'تجارة', shipping: 'شحن', fleet: 'أسطول', duplicate: 'مكرر' };
+
+  CASES.forEach(c => {
+    const ck = creditorMap[c.creditorGroup] || c.creditorGroup;
+    counts.creditor[ck] = (counts.creditor[ck] || 0) + 1;
+    const sk = statusMap[c.status] || c.status;
+    counts.status[sk] = (counts.status[sk] || 0) + 1;
+    const cok = courtMap[c.court] || c.court;
+    counts.court[cok] = (counts.court[cok] || 0) + 1;
+    const tk = typeMap[c.type] || c.type;
+    counts.type[tk] = (counts.type[tk] || 0) + 1;
+    c.tags.forEach(t => {
+      const tagk = tagMap[t] || t;
+      counts.tag[tagk] = (counts.tag[tagk] || 0) + 1;
+    });
+  });
+  return { counts, creditorMap, statusMap, courtMap, typeMap, tagMap };
+}
+
+function buildFilterButtons() {
+  const { counts, creditorMap, statusMap, courtMap, typeMap, tagMap } = getFilterCounts();
+
+  function renderGroup(containerId, items, filterKey, reverseMap) {
+    const el = document.getElementById(containerId);
+    el.innerHTML = '';
+    Object.entries(items).forEach(([label, count]) => {
+      const btn = document.createElement('button');
+      btn.className = 'filter-btn';
+      btn.innerHTML = `${label} <span class="count">${count}</span>`;
+      const filterVal = Object.entries(reverseMap).find(([k,v]) => v === label)?.[0] || label;
+      btn.setAttribute('data-filter-key', filterKey);
+      btn.setAttribute('data-filter-val', filterVal);
+      btn.onclick = () => toggleFilter(filterKey, filterVal, btn);
+      el.appendChild(btn);
+    });
+  }
+
+  renderGroup('creditorFilters', counts.creditor, 'creditor', creditorMap);
+  renderGroup('statusFilters', counts.status, 'status', statusMap);
+  renderGroup('courtFilters', counts.court, 'court', courtMap);
+  renderGroup('typeFilters', counts.type, 'type', typeMap);
+  renderGroup('tagFilters', counts.tag, 'tag', tagMap);
+}
+
+function toggleFilter(key, val, btn) {
+  if (activeFilters[key] === val) {
+    activeFilters[key] = null;
+    btn.classList.remove('active');
+  } else {
+    const container = btn.parentElement;
+    container.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    activeFilters[key] = val;
+    btn.classList.add('active');
+  }
+  renderCases();
+}
+
+function renderActiveFiltersStrip() {
+  const strip = document.getElementById('activeFiltersStrip');
+  const chips = document.getElementById('activeFilterChips');
+  const labelMaps = {
+    creditor: { label: 'الدائن', map: { rajhi:'الراجحي', snb:'الأهلي', riyad:'بنك الرياض', subaie:'حمد السبيعي', individual:'أفراد', company:'شركات', trade:'تجارة دولية' }},
+    status: { label: 'الحالة', map: { active:'قيد التنفيذ', completed:'منتهي', refused:'تم الامتناع', grace:'تم الامهال', executed:'تم التنفيذ' }},
+    court: { label: 'المحكمة', map: { jeddah:'جدة', riyadh:'الرياض', madinah:'المدينة', dammam:'الدمام' }},
+    type: { label: 'النوع', map: { promissory:'سند لأمر', electronic:'سند إلكتروني', judgment:'حكم', rental:'عقد إيجار' }},
+    tag: { label: 'التصنيف', map: { bank:'بنك', individual:'فرد', trade:'تجارة', shipping:'شحن', fleet:'أسطول', duplicate:'مكرر' }}
+  };
+  const active = Object.entries(activeFilters).filter(([k,v]) => v && k !== 'search');
+  const hasSearch = activeFilters.search.length > 0;
+  if (active.length === 0 && !hasSearch) { strip.classList.remove('visible'); return; }
+  strip.classList.add('visible');
+  let html = '';
+  active.forEach(([key, val]) => {
+    const info = labelMaps[key];
+    const displayVal = info ? (info.map[val] || val) : val;
+    const catLabel = info ? info.label : key;
+    html += `<span class="filter-chip"><span class="chip-cat">${catLabel}:</span> ${displayVal} <button class="chip-remove" onclick="removeFilter('${key}')">&times;</button></span>`;
+  });
+  if (hasSearch) {
+    html += `<span class="filter-chip"><span class="chip-cat">بحث:</span> ${activeFilters.search} <button class="chip-remove" onclick="removeFilter('search')">&times;</button></span>`;
+  }
+  chips.innerHTML = html;
+}
+
+function removeFilter(key) {
+  if (key === 'search') {
+    activeFilters.search = '';
+    document.getElementById('searchBox').value = '';
+  } else {
+    activeFilters[key] = null;
+    document.querySelectorAll(`[data-filter-key="${key}"]`).forEach(b => b.classList.remove('active'));
+  }
+  renderCases();
+}
+
+function clearFilters() {
+  activeFilters = { creditor: null, status: null, court: null, type: null, tag: null, search: '' };
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('searchBox').value = '';
+  renderCases();
+}
+
+function filterCases() {
+  return CASES.filter(c => {
+    if (activeFilters.creditor && c.creditorGroup !== activeFilters.creditor) return false;
+    if (activeFilters.status && c.status !== activeFilters.status) return false;
+    if (activeFilters.court && c.court !== activeFilters.court) return false;
+    if (activeFilters.type && c.type !== activeFilters.type) return false;
+    if (activeFilters.tag && !c.tags.includes(activeFilters.tag)) return false;
+    if (activeFilters.search && !c.caseNum.includes(activeFilters.search)) return false;
+    return true;
+  });
+}
+
+// ===== RENDER CASES =====
+function renderCases() {
+  renderActiveFiltersStrip();
+  const filtered = filterCases();
+  const list = document.getElementById('casesList');
+  document.getElementById('resultsCount').textContent = `عرض ${filtered.length} من ${CASES.length} قضية`;
+
+  list.innerHTML = filtered.map(c => `
+    <div class="case-card" data-id="${c.id}">
+      <div class="case-header" onclick="toggleCase(${c.id})">
+        <div>
+          <span class="case-num">#${c.caseNum}</span>
+          <div style="font-size:0.72rem;color:var(--text-muted);margin-top:2px;">قضية ${c.id}</div>
+        </div>
+        <div class="case-info">
+          <span class="case-creditor">${c.requester}</span>
+          <span class="case-amount ${c.amountClaimed >= 500000 ? 'large' : ''}">${fmtSAR(c.amountClaimed)}</span>
+          <span class="case-meta-item">${c.courtAr}</span>
+          <span class="case-meta-item">${c.typeAr}</span>
+          ${c.tags.map(t => getTagHTML(t)).join('')}
+        </div>
+        <div class="case-right">
+          ${getStatusBadge(c.status)}
+          ${c.amountRemaining !== c.amountClaimed && c.amountClaimed > 0 ?
+            `<span style="font-size:0.72rem;color:var(--text-muted);">متبقي: ${fmtSAR(c.amountRemaining)}</span>` : ''}
+          <span class="expand-icon">&#9654;</span>
+        </div>
+      </div>
+      <div class="case-detail">
+        <div class="detail-grid">
+          <div class="detail-box">
+            <h4>بيانات القضية</h4>
+            <div class="detail-row"><span class="detail-label">رقم القضية:</span><span class="detail-value">${c.caseNum}</span></div>
+            <div class="detail-row"><span class="detail-label">تاريخ القيد:</span><span class="detail-value">${c.filingDate}</span></div>
+            <div class="detail-row"><span class="detail-label">المحكمة:</span><span class="detail-value">${c.courtAr} - ${c.dept}</span></div>
+            <div class="detail-row"><span class="detail-label">النوع:</span><span class="detail-value">${c.typeAr}</span></div>
+            <div class="detail-row"><span class="detail-label">رقم المستند:</span><span class="detail-value">${c.docNum || '-'}</span></div>
+            <div class="detail-row"><span class="detail-label">تاريخ المستند:</span><span class="detail-value">${c.docDate || '-'}</span></div>
+            ${c.decisions ? `<div class="detail-row"><span class="detail-label">القرارات:</span><span class="detail-value">${c.decisions}</span></div>` : ''}
+          </div>
+          <div class="detail-box">
+            <h4>المبالغ</h4>
+            <div class="detail-row"><span class="detail-label">المطالبة:</span><span class="detail-value" style="color:var(--red);">${fmtSAR(c.amountClaimed)}</span></div>
+            <div class="detail-row"><span class="detail-label">المحصل:</span><span class="detail-value" style="color:var(--green);">${fmtSAR(c.amountReceived)}</span></div>
+            <div class="detail-row"><span class="detail-label">المتبقي:</span><span class="detail-value" style="font-weight:700;">${fmtSAR(c.amountRemaining)}</span></div>
+          </div>
+          <div class="detail-box">
+            <h4>الأطراف</h4>
+            <div class="detail-row"><span class="detail-label">طالب التنفيذ:</span><span class="detail-value">${c.requester}</span></div>
+            ${c.requesterAgent ? `<div class="detail-row"><span class="detail-label">الوكيل:</span><span class="detail-value">${c.requesterAgent}</span></div>` : ''}
+            <div class="detail-row"><span class="detail-label">المنفذ ضده:</span><span class="detail-value">${c.against}</span></div>
+          </div>
+        </div>
+        ${c.stages ? `<div style="margin-bottom:12px;"><strong style="font-size:0.82rem;color:var(--accent);">مراحل التنفيذ:</strong><div class="stage-timeline">${c.stages.split('←').map(s => `<span class="stage-item">${s.trim()}</span><span class="stage-arrow">&#8592;</span>`).join('').slice(0,-38)}</div></div>` : ''}
+        ${c.note ? `<div style="background:var(--yellow-bg);border:1px solid var(--yellow-border);border-radius:4px;padding:8px 12px;font-size:0.82rem;margin-bottom:12px;"><strong>ملاحظة:</strong> ${c.note}</div>` : ''}
+        ${c.attachment ? `<div class="attachment-content"><h4 style="color:var(--accent);">المرفق المحلل</h4>${c.attachment}</div>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleCase(id) {
+  const card = document.querySelector(`.case-card[data-id="${id}"]`);
+  card.classList.toggle('expanded');
+}
+
+// ===== STATS =====
+function renderStats() {
+  const active = CASES.filter(c => c.status === 'active');
+  const completed = CASES.filter(c => c.status === 'completed');
+  const refused = CASES.filter(c => c.status === 'refused');
+  const grace = CASES.filter(c => c.status === 'grace');
+  const executed = CASES.filter(c => c.status === 'executed');
+
+  document.getElementById('activeCases').textContent = active.length;
+  document.getElementById('activeAmount').textContent = fmtSAR(active.reduce((s,c) => s + c.amountRemaining, 0)) + ' متبقي';
+  document.getElementById('completedCases').textContent = completed.length;
+  document.getElementById('completedAmount').textContent = fmtSAR(completed.reduce((s,c) => s + c.amountClaimed, 0));
+  document.getElementById('refusedCases').textContent = refused.length;
+  document.getElementById('refusedAmount').textContent = fmtSAR(refused.reduce((s,c) => s + c.amountClaimed, 0));
+  document.getElementById('graceCases').textContent = grace.length;
+  document.getElementById('graceAmount').textContent = fmtSAR(grace.reduce((s,c) => s + c.amountClaimed, 0));
+
+  const totalClaimed = CASES.reduce((s,c) => s + c.amountClaimed, 0);
+  const totalRemaining = CASES.reduce((s,c) => s + c.amountRemaining, 0);
+  document.getElementById('totalClaimed').textContent = fmtSAR(totalClaimed);
+  document.getElementById('totalRemaining').textContent = `متبقي: ${fmtSAR(totalRemaining)}`;
+
+  // PIE CHART - المتبقي حسب الدائن
+  const pieGroups = {};
+  CASES.forEach(c => {
+    const g = c.creditorGroup;
+    if (!pieGroups[g]) pieGroups[g] = 0;
+    pieGroups[g] += c.amountRemaining;
+  });
+  const pieColors = {
+    rajhi: '#b44040', snb: '#406080', riyad: '#5a6e5a', subaie: '#c27830',
+    individual: '#808080', company: '#705898', trade: '#308080'
+  };
+  const pieLabels = {
+    rajhi: 'مصرف الراجحي', snb: 'البنك الأهلي', riyad: 'بنك الرياض',
+    subaie: 'حمد السبيعي', individual: 'أفراد', company: 'شركات',
+    trade: 'تجارة دولية'
+  };
+  const pieSorted = Object.entries(pieGroups)
+    .filter(([,v]) => v > 0)
+    .sort((a,b) => b[1] - a[1]);
+  const pieTotal = pieSorted.reduce((s,[,v]) => s + v, 0);
+
+  const R = 90, CX = 110, CY = 110, SW = 38;
+  const circumference = 2 * Math.PI * R;
+  let offset = 0;
+  let svgPaths = '';
+  pieSorted.forEach(([key, val]) => {
+    const pct = val / pieTotal;
+    const dashLen = pct * circumference;
+    const dashGap = circumference - dashLen;
+    const color = pieColors[key] || '#999';
+    svgPaths += `<circle cx="${CX}" cy="${CY}" r="${R}" fill="none" stroke="${color}" stroke-width="${SW}" stroke-dasharray="${dashLen} ${dashGap}" stroke-dashoffset="${-offset}" />`;
+    offset += dashLen;
+  });
+  document.getElementById('pieChartContainer').innerHTML = `
+    <svg viewBox="0 0 220 220">${svgPaths}</svg>
+    <div class="pie-center-label">
+      <div class="pie-total">${fmtSAR(pieTotal)}</div>
+      <div class="pie-sub">إجمالي المتبقي</div>
+    </div>`;
+
+  document.getElementById('pieLegend').innerHTML = pieSorted.map(([key, val]) => {
+    const pct = (val / pieTotal * 100).toFixed(1);
+    const color = pieColors[key] || '#999';
+    return `<div class="pie-legend-item">
+      <div class="pie-legend-dot" style="background:${color}"></div>
+      <span class="pie-legend-name">${pieLabels[key] || key}</span>
+      <span class="pie-legend-amount">${fmtSAR(val)}</span>
+      <span class="pie-legend-pct">${pct}%</span>
+    </div>`;
+  }).join('');
+}
+
+// ===== ANALYSIS =====
+function renderAnalysis() {
+  // Creditor chart
+  const groups = {};
+  CASES.forEach(c => {
+    const g = c.creditorGroup;
+    if (!groups[g]) groups[g] = { claimed: 0, remaining: 0, count: 0 };
+    groups[g].claimed += c.amountClaimed;
+    groups[g].remaining += c.amountRemaining;
+    groups[g].count++;
+  });
+
+  const maxClaimed = Math.max(...Object.values(groups).map(g => g.claimed));
+  const chartHTML = Object.entries(groups)
+    .sort((a,b) => b[1].claimed - a[1].claimed)
+    .map(([key, g]) => {
+      const pct = (g.claimed / maxClaimed * 100).toFixed(0);
+      return `<div class="bar-row">
+        <span class="bar-label">${getCreditorLabel(key)} (${g.count})</span>
+        <div class="bar-track">
+          <div class="bar-fill ${key}" style="width:${pct}%">
+            <span class="bar-value">${fmtSAR(g.claimed)}</span>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+  document.getElementById('creditorChart').innerHTML = chartHTML;
+
+  // Risk assessment
+  const riskHTML = `
+    <div class="risk-item"><span class="risk-dot high"></span><strong>مخاطر عالية جداً:</strong> 31 قضية نشطة تحت المادة 46 - حجز أموال وإيقاف خدمات</div>
+    <div class="risk-item"><span class="risk-dot high"></span><strong>تعدد المحاكم:</strong> قضايا في جدة والرياض والمدينة والدمام - يصعب التفاوض مركزياً</div>
+    <div class="risk-item"><span class="risk-dot high"></span><strong>كثافة الراجحي:</strong> ~20 قضية من مصرف الراجحي عبر وكيل واحد (المنذر الغانمي) - فرصة للتفاوض الجماعي</div>
+    <div class="risk-item"><span class="risk-dot medium"></span><strong>قضايا مكررة:</strong> عدة حالات تكرار (1&2, 18&19, 41&42) - قد يُطعن فيها</div>
+    <div class="risk-item"><span class="risk-dot medium"></span><strong>ضمانات متعددة:</strong> كلا المؤسستين (غدير خالد للتجارة + غدير الشرق) كفيلتان غارمتان</div>
+    <div class="risk-item"><span class="risk-dot low"></span><strong>سداد جزئي:</strong> تم تحصيل بعض المبالغ (SNB: 118K, الرياض: 291K, الجاسر: 72K) يدل على قدرة سداد جزئية</div>
+  `;
+  document.getElementById('riskAssessment').innerHTML = riskHTML;
+
+  // Entity summary
+  document.getElementById('entitySummary').innerHTML = `
+    <div class="group-box">
+      <h4>مؤسسة غدير الشرق التجارية</h4>
+      <p>سجل تجاري: 4030319915 | رقم موحد: 7005683292 | فرع من: مؤسسة غدير خالد الحساوي للتجارة</p>
+      <p>العنوان: 7906، حي المحجر، 3183، جدة 22421 | رأس المال: 100,000 ريال</p>
+      <p>المدير: غدير خالد عبدالعزيز الحساوي | هاتف: 0122067937</p>
+      <p>الضريبي: 302033896800003 | بريد: Ahmed@GhadeerSharq.com | ghadeertradingksa@gmail.com</p>
+    </div>
+    <div class="group-box">
+      <h4>مؤسسة غدير خالد عبدالعزيز الحساوي للتجارة (المركز الرئيسي)</h4>
+      <p>سجل تجاري: 4030604215 | رقم موحد: 7002496375</p>
+      <p>المركز الرئيسي: جدة | كفيل غارم في عدة سندات</p>
+    </div>
+  `;
+}
+
+// ===== GROUPS =====
+function renderGroups() {
+  const groupsHTML = `
+    <div class="analysis-card">
+      <h3>مجموعة مصرف الراجحي (~20 قضية)</h3>
+      <div class="group-box">
+        <h4>نقاط التفاوض الجماعي</h4>
+        <p>جميع القضايا عبر وكيل واحد: <strong>المنذر عبدالله اسماعيل الغانمي</strong> (هوية: 1035452851)</p>
+        <p>رقم مستند موحد: <strong>24475532</strong> | المستفيد: شركة الراجحي المصرفية للاستثمار (سجل: 1010000096)</p>
+        <p>إجمالي المطالبات: <span class="amount">${fmtSAR(CASES.filter(c=>c.creditorGroup==='rajhi').reduce((s,c)=>s+c.amountClaimed,0))}</span></p>
+        <p>إجمالي المتبقي: <span class="amount">${fmtSAR(CASES.filter(c=>c.creditorGroup==='rajhi').reduce((s,c)=>s+c.amountRemaining,0))}</span></p>
+        <p>النطاق الزمني للسندات: يونيو 2022 - مايو 2025 | المحاكم: جدة + الرياض + المدينة</p>
+        <p><strong>توصية:</strong> تفاوض موحد مع إدارة التحصيل بالراجحي لتسوية شاملة بخصم كبير</p>
+        <div class="cases-list-inline">
+          ${CASES.filter(c=>c.creditorGroup==='rajhi').map(c=>`<span class="case-tag">${c.caseNum.slice(-6)}</span>`).join('')}
+        </div>
+      </div>
+    </div>
+
+    <div class="analysis-card">
+      <h3>القضايا المكررة (فرصة إسقاط)</h3>
+      <div class="group-box">
+        <h4>القضايا 1 & 2: مكرر تام</h4>
+        <p>#401014704178780 و #401014704178773 | نفس المبلغ: 174,414.84 ريال | نفس المستند: 24475532 | نفس التاريخ</p>
+        <p><strong>توصية:</strong> طلب شطب إحداهما كتكرار</p>
+      </div>
+      <div class="group-box">
+        <h4>القضايا 18 & 19: مكرر (مرفوضتان)</h4>
+        <p>#401014704091034 و #401014704091036 | مبلغ: 61,867.68 ريال | مستند: 29535383 | كلاهما تم الامتناع</p>
+        <p>القضية 20 (#401014704091030) نفس المستند لكنها مقبولة</p>
+      </div>
+      <div class="group-box">
+        <h4>القضايا 41 & 42: حمد السبيعي (3M + 3M)</h4>
+        <p>نفس الطالب والمبلغ (3,000,000 ريال) ونفس التاريخ (2025-01-30)</p>
+        <p>41 ضد المؤسسة+الفرد | 42 ضد الفرد فقط</p>
+        <p>إجمالي: <span class="amount">6,000,000 SAR</span> | عبر بنك الخليج الدولي</p>
+      </div>
+    </div>
+
+    <div class="analysis-card">
+      <h3>البنك الأهلي السعودي (SNB)</h3>
+      <div class="group-box">
+        <p>قضية واحدة: #401014704123649 | المطالبة: <span class="amount">2,200,000 SAR</span> | محصل: 118,641.24 | متبقي: 2,081,358.76</p>
+        <p>الوكيل: عصام حسن علي فرغل | ضد: مؤسسة غدير الشرق + غدير خالد</p>
+        <p>كفلاء: وليد احمد جعبور + غدير خالد</p>
+      </div>
+    </div>
+
+    <div class="analysis-card">
+      <h3>بنك الرياض</h3>
+      <div class="group-box">
+        <p>قضية واحدة: #401014704003874 | المطالبة: <span class="amount">668,000 SAR</span> | محصل: 291,256 | متبقي: 376,744</p>
+        <p>قرض شخصي | فرع #225 الرياض | ضد: غدير خالد فقط</p>
+      </div>
+    </div>
+
+    <div class="analysis-card">
+      <h3>التجارة الدولية - Asafi General Trading</h3>
+      <div class="group-box">
+        <p>قضية: #401014703734827 | المطالبة: <span class="amount">2,250,000 SAR</span></p>
+        <p>عقد بيع وتسليم بضائع (Incoterms 2020) مع شركة أصافي للتجارة العامة (دبي)</p>
+        <p>مقدم القضية: فهد ضيدان محمد ال سفران | ضد: مؤسسة غدير الشرق + غدير خالد</p>
+        <p>غرامة تأخير: 200$ يومياً | عملة العقد: الدولار | التحكيم: محاكم السعودية</p>
+      </div>
+    </div>
+
+    <div class="analysis-card">
+      <h3>خدمات الشحن - شركة الطبيعة العربية</h3>
+      <div class="group-box">
+        <p>قضية: #401024702187430 (حكم تجاري) | المبلغ: <span class="amount">28,839.99 SAR</span></p>
+        <p>أجور خدمات شحن بحري ولوجستيات خلال يناير-ديسمبر 2024</p>
+        <p>صدر الحكم غيابياً بعد نكول المدعى عليها عن اليمين</p>
+      </div>
+    </div>
+  `;
+  document.getElementById('groupsList').innerHTML = groupsHTML;
+}
+
+// ===== TIMELINE =====
+function renderTimeline() {
+  const sorted = [...CASES].sort((a,b) => {
+    const da = a.docDate || '0000'; const db = b.docDate || '0000';
+    return db.localeCompare(da);
+  });
+
+  const timelineHTML = sorted.filter(c => c.docDate && c.docDate !== '').map(c => `
+    <div class="timeline-item">
+      <div class="timeline-date">${c.docDate} | ${c.filingDate}</div>
+      <div class="timeline-text">
+        ${getStatusBadge(c.status)}
+        <strong style="margin:0 6px;">${fmtSAR(c.amountClaimed)}</strong>
+        ${c.requester} (${c.typeAr})
+        <span style="font-size:0.72rem;color:var(--text-muted);">#${c.caseNum}</span>
+      </div>
+    </div>
+  `).join('');
+
+  document.getElementById('timelineView').innerHTML = timelineHTML;
+}
+
+// ===== TABS =====
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+  });
+});
+
+// ===== SEARCH =====
+document.getElementById('searchBox').addEventListener('input', (e) => {
+  activeFilters.search = e.target.value.trim();
+  renderCases();
+});
+
+// ===== INIT =====
+renderStats();
+buildFilterButtons();
+renderCases();
+renderAnalysis();
+renderGroups();
+renderTimeline();
+</script>
+</body>
+</html>
