@@ -758,7 +758,7 @@ const CASES = [
     stages: "",
     decisions: 2, creditorGroup: "rajhi",
     tags: ["bank"],
-    vehicles: [{type:"تمويل أقساط (مرابحة)", contracts:"41523266, 41524085, 41524280", totalFinancing:"365,443.17 ريال", note:"3 عقود أقساط مركبات، جميعها غير مسددة"}],
+    vehicles: [{type:"تمويل أقساط (مرابحة)", contracts:"41524085", vehicle:"SAIC Motor MG ZS 2022", plate:"ADR 5788 / 5788 ر د أ", totalFinancing:"71,783 ريال", note:"عقد مركبة سايك موتور MG ZS"}],
     note: "يتضمن ورقة اعتراض",
     attachment: `<h4>سند لأمر - مصرف الراجحي</h4><p>المبلغ: 24,406.31 ريال سعودي | مكان الانشاء: جده | تاريخ الانشاء: 15/09/2022</p><p>محرر السند (المدين): مؤسسة غدير الشرق التجارية - سجل: 7005683292</p><p>عنوان محرر السند: شارع زينل جده</p><p>رقم الطلب: 41524085</p>`
   },
@@ -1302,15 +1302,22 @@ const CASES = [
 ];
 
 const FLEET_VEHICLES = [
-  { id: 1, make: "إيسوزو", model: "FVR (شاحنة)", year: 2023, color: "أبيض", chassis: "RS1P7S139PW001374", contract: "48227691", plate: "5936 ب ط ح", dept: "فريق بابو", installment: 7117, financing: "244,040 ريال", icon: "\u{1F69B}", linkedCases: ["401014704098729","401014704098748"], linkType: "verified" },
-  { id: 2, make: "تويوتا", model: "هايلكس (بيك أب)", year: 2023, color: "أبيض", chassis: "MR0CB9BB1P0067597", contract: "48297704", plate: "5937 ب ط ح", dept: "حسن", installment: 2843, financing: "93,804 ريال", icon: "\u{1F6FB}", linkedCases: ["401014704105695","401014704105693"], linkType: "verified" },
-  { id: 3, make: "تويوتا", model: "هايس (فان)", year: 2023, color: "أبيض", chassis: "JTFLAFCP2P6019105", contract: "48539575", plate: "6231 ب ط أ", dept: "قربان", installment: 4317, financing: "\u2014", icon: "\u{1F690}", linkedCases: ["401014704099510","401014704099513"], linkType: "verified" },
-  { id: 4, make: "نيسان", model: "أورفان", year: 2023, color: "أبيض", chassis: "JN6CE6BS8P9035498", contract: "49832799", plate: "8065 ب ط ط", dept: "مادا", installment: 3146, financing: "\u2014", icon: "\u{1F690}", linkedCases: ["401014704095086","401014704095088"], linkType: "verified" },
-  { id: 5, make: "نيسان", model: "أورفان", year: 2023, color: "أبيض", chassis: "JN6CE6BS9P9035459", contract: "49949426", plate: "8060 ب ط ط", dept: "مادا", installment: 3146, financing: "\u2014", icon: "\u{1F690}", linkedCases: ["401014704104403","401014704104400"], linkType: "inferred" },
-  { id: 6, make: "تويوتا", model: "هايس (فان)", year: 2023, color: "أبيض", chassis: "JTGHB9CP4P6044037", contract: "48297430", plate: "4623 ب ط س", dept: "عسيمي", installment: 4535, financing: "\u2014", icon: "\u{1F690}", linkedCases: [], linkType: "none" },
-  { id: 7, make: "إيسوزو", model: "شاحنة", year: 2023, color: "أبيض", chassis: "RS1P7S134PW002321", contract: "ARBCPO10087013", plate: "4338 ب ع س", dept: "فريق بابو", installment: 7397, financing: "384,654 ريال (أسطول)", icon: "\u{1F69B}", linkedCases: ["401014704098768","401014704098777","401014704098786"], linkType: "inferred" },
-  { id: 8, make: "نيسان", model: "إكس تريل (SUV)", year: 2024, color: "أسود", chassis: "\u2014", contract: "أسطول", plate: "1646 ر ك ي", dept: "فروزن", installment: 3690, financing: "\u2014", icon: "\u{1F699}", linkedCases: ["401014704084947","401014704089841"], linkType: "inferred" },
-  { id: 9, make: "إيسوزو", model: "بيك أب دبل كاب", year: 2023, color: "أبيض", chassis: "\u2014", contract: "غير معروف", plate: "8059 ب ط ط", dept: "المدينة", installment: 2735, financing: "\u2014", icon: "\u{1F6FB}", linkedCases: ["401014704091030"], linkType: "inferred" }
+  { id:1, make:"تويوتا", model:"هايس (فان)", year:2023, color:"أبيض", chassis:"JTFLAFCP2P6019105", contract:"48539575", plate:"6231 ب ط أ", plateEn:"ATB 6231", dept:"قربان", installment:4317, totalRepay:207216, deductDay:"6", firstInst:"8/6/23", lastInst:"8/6/27", financing:"—", icon:"🚐", linkedCases:["401014704099510","401014704099513"], linkType:"verified" },
+  { id:2, make:"إيسوزو", model:"FVR شاحنة (دبل)", year:2023, color:"أبيض", chassis:"RS1P7S139PW001374", contract:"48227691", plate:"5936 ب ط ح", plateEn:"JTB 5936", dept:"فريق بابو", installment:7117, totalRepay:341616, deductDay:"6", firstInst:"7/6/23", lastInst:"7/6/27", financing:"244,040 ريال", icon:"🚛", linkedCases:["401014704098729","401014704098748"], linkType:"verified" },
+  { id:3, make:"تويوتا", model:"هايلكس بيك أب (غمارة)", year:2023, color:"أبيض", chassis:"MR0CB9BB1P0067597", contract:"48297704", plate:"5937 ب ط ح", plateEn:"JTB 5937", dept:"حسن", installment:2843, totalRepay:136464, deductDay:"6", firstInst:"10/6/23", lastInst:"10/6/27", financing:"93,804 ريال", icon:"🛻", linkedCases:["401014704105695","401014704105693"], linkType:"verified" },
+  { id:4, make:"سايك موتور", model:"MG ZS", year:2022, color:"أسود", chassis:"—", contract:"41524085", plate:"5788 ر د أ", plateEn:"ADR 5788", dept:"فروزن", installment:2033, totalRepay:97584, deductDay:"6", firstInst:"10/5/22", lastInst:"9/5/26", financing:"71,783 ريال", icon:"🚙", linkedCases:["401014704115805"], linkType:"verified" },
+  { id:5, make:"نيسان", model:"أورفان", year:2023, color:"أبيض", chassis:"JN6CE6BS8P9035498", contract:"49832799", plate:"8065 ب ط ط", plateEn:"TTB 8065", dept:"مادا", installment:3146, totalRepay:151008, deductDay:"6", firstInst:"9/6/23", lastInst:"9/6/27", financing:"—", icon:"🚐", linkedCases:["401014704095086","401014704095088"], linkType:"verified" },
+  { id:6, make:"إيسوزو", model:"شاحنة", year:2025, color:"أبيض", chassis:"—", contract:"أسطول (مايو 2025)", plate:"4314 ب ع ل", plateEn:"LEB 4314", dept:"فروزن", installment:3807, totalRepay:182736, deductDay:"15", firstInst:"5/14/25", lastInst:"5/14/29", financing:"عقد أسطول", icon:"🚛", linkedCases:["401014704178780","401014704178773","401014704100344"], linkType:"inferred" },
+  { id:7, make:"إيسوزو", model:"REWARD", year:2025, color:"أبيض", chassis:"—", contract:"أسطول (مايو 2025)", plate:"4315 ب ع ل", plateEn:"LEB 4315", dept:"مادا", installment:3586, totalRepay:172128, deductDay:"14", firstInst:"5/14/25", lastInst:"5/14/29", financing:"عقد أسطول", icon:"🚛", linkedCases:["401014704178780","401014704178773","401014704100344"], linkType:"inferred" },
+  { id:8, make:"إيسوزو", model:"شاحنة", year:2023, color:"أبيض", chassis:"RS1P7S134PW002321", contract:"ARBCPO10087013", plate:"4338 ب ع س", plateEn:"SEB 4338", dept:"فريق بابو", installment:7397, totalRepay:355056, deductDay:"9", firstInst:"10/9/24", lastInst:"10/9/28", financing:"384,654 ريال (أسطول)", icon:"🚛", linkedCases:["401014704098768","401014704098777","401014704098786"], linkType:"inferred" },
+  { id:9, make:"تويوتا", model:"هايس (فان)", year:2023, color:"أبيض", chassis:"JTGHB9CP4P6044037", contract:"48297430", plate:"4623 ب ط س", plateEn:"STB 4623", dept:"عسيمي", installment:4535, totalRepay:217680, deductDay:"6", firstInst:"10/6/23", lastInst:"10/6/27", financing:"—", icon:"🚐", linkedCases:[], linkType:"none" },
+  { id:10, make:"نيسان", model:"أورفان", year:2023, color:"أبيض", chassis:"JN6CE6BS9P9035459", contract:"49949426", plate:"8060 ب ط ط", plateEn:"TTB 8060", dept:"مادا", installment:3146, totalRepay:151008, deductDay:"6", firstInst:"9/6/23", lastInst:"9/6/27", financing:"—", icon:"🚐", linkedCases:["401014704104403","401014704104400"], linkType:"inferred" },
+  { id:11, make:"إيسوزو", model:"شاحنة", year:2022, color:"أبيض", chassis:"—", contract:"41524280", plate:"3263 ب ص ط", plateEn:"TXB 3263", dept:"فروزن", installment:3197, totalRepay:153456, deductDay:"6", firstInst:"10/5/22", lastInst:"9/5/26", financing:"112,838 ريال", icon:"🚛", linkedCases:[], linkType:"none" },
+  { id:12, make:"تويوتا", model:"RAV4", year:2025, color:"أبيض", chassis:"—", contract:"أسطول (مايو 2025)", plate:"1513 ر و ق", plateEn:"GUR 1513", dept:"عسيمي", installment:3807, totalRepay:182736, deductDay:"15", firstInst:"5/14/25", lastInst:"5/14/29", financing:"عقد أسطول", icon:"🚙", linkedCases:["401014704178780","401014704178773","401014704100344"], linkType:"inferred" },
+  { id:13, make:"إيسوزو", model:"REWARD", year:2025, color:"أبيض", chassis:"—", contract:"أسطول (مايو 2025)", plate:"4313 ب ع ل", plateEn:"LEB 4313", dept:"فريق بابو", installment:4064, totalRepay:195072, deductDay:"14", firstInst:"5/14/25", lastInst:"5/14/29", financing:"عقد أسطول", icon:"🚛", linkedCases:["401014704178780","401014704178773","401014704100344"], linkType:"inferred" },
+  { id:14, make:"نيسان", model:"إكس تريل", year:2024, color:"أسود", chassis:"—", contract:"أسطول", plate:"1646 ر ك ي", plateEn:"VKR 1646", dept:"فروزن", installment:3690, totalRepay:177120, deductDay:"8", firstInst:"10/9/24", lastInst:"10/9/28", financing:"—", icon:"🚙", linkedCases:["401014704084947","401014704089841"], linkType:"inferred" },
+  { id:15, make:"شانجان", model:"CS95", year:2023, color:"أبيض", chassis:"—", contract:"41523266", plate:"8650 ر د أ", plateEn:"ADR 8650", dept:"المدينة", installment:3215, totalRepay:154320, deductDay:"6", firstInst:"10/5/22", lastInst:"9/5/26", financing:"113,500 ريال", icon:"🚙", linkedCases:[], linkType:"none" },
+  { id:16, make:"إيسوزو", model:"بيك أب (غمارتين)", year:2023, color:"أبيض", chassis:"—", contract:"غير معروف", plate:"8059 ب ط ط", plateEn:"TTB 8059", dept:"المدينة", installment:2735, totalRepay:131280, deductDay:"6", firstInst:"7/6/23", lastInst:"7/6/27", financing:"—", icon:"🛻", linkedCases:["401014704091030"], linkType:"inferred" }
 ];
 
 // ===== HELPER FUNCTIONS =====
@@ -1532,7 +1539,7 @@ function renderCases() {
         </div>
         ${c.stages ? `<div style="margin-bottom:12px;"><strong style="font-size:0.82rem;color:var(--accent);">مراحل التنفيذ:</strong><div class="stage-timeline">${c.stages.split('←').map(s => `<span class="stage-item">${s.trim()}</span><span class="stage-arrow">&#8592;</span>`).join('').slice(0,-38)}</div></div>` : ''}
         ${c.note ? `<div style="background:var(--yellow-bg);border:1px solid var(--yellow-border);border-radius:4px;padding:8px 12px;font-size:0.82rem;margin-bottom:12px;"><strong>ملاحظة:</strong> ${c.note}</div>` : ''}
-        ${c.vehicles ? `<div class="vehicle-details"><h4>&#x1F69B; مركبات الأسطول</h4>${c.vehicles.map(v => `<div class="vehicle-item">${v.make ? `<div class="v-title">${v.make} ${v.model}${v.year ? ' ('+v.year+')' : ''}${v.color ? ' - '+v.color : ''}${v.linkType ? ' <span class="link-badge '+v.linkType+'">'+(v.linkType==='verified'?'مؤكد':'مستنتج')+'</span>' : ''}</div>` : (v.type ? `<div class="v-title">${v.type}${v.linkType ? ' <span class="link-badge '+v.linkType+'">'+(v.linkType==='verified'?'مؤكد':'مستنتج')+'</span>' : ''}</div>` : '')}${v.plate ? `<div class="v-row"><span class="v-label">اللوحة:</span><span class="plate-num">${v.plate}</span></div>` : ''}${v.chassis ? `<div class="v-row"><span class="v-label">رقم الهيكل:</span><span class="v-val">${v.chassis}</span></div>` : ''}${v.contract ? `<div class="v-row"><span class="v-label">رقم العقد:</span><span class="v-val">${v.contract}</span></div>` : ''}${v.contracts ? `<div class="v-row"><span class="v-label">العقود:</span><span class="v-val">${v.contracts}</span></div>` : ''}${v.ref ? `<div class="v-row"><span class="v-label">المرجع:</span><span class="v-val">${v.ref}</span></div>` : ''}${v.financing ? `<div class="v-row"><span class="v-label">التمويل:</span><span class="v-val">${v.financing}</span></div>` : ''}${v.totalFinancing ? `<div class="v-row"><span class="v-label">إجمالي التمويل:</span><span class="v-val">${v.totalFinancing}</span></div>` : ''}${v.amount ? `<div class="v-row"><span class="v-label">المبلغ:</span><span class="v-val">${v.amount}</span></div>` : ''}${v.supplier ? `<div class="v-row"><span class="v-label">المورد:</span><span class="v-val">${v.supplier}</span></div>` : ''}${v.note ? `<div class="v-note">${v.note}</div>` : ''}</div>`).join('')}</div>` : ''}
+        ${c.vehicles ? `<div class="vehicle-details"><h4>&#x1F69B; مركبات الأسطول</h4>${c.vehicles.map(v => `<div class="vehicle-item">${v.make ? `<div class="v-title">${v.make} ${v.model}${v.year ? ' ('+v.year+')' : ''}${v.color ? ' - '+v.color : ''}${v.linkType ? ' <span class="link-badge '+v.linkType+'">'+(v.linkType==='verified'?'مؤكد':'مستنتج')+'</span>' : ''}</div>` : (v.type ? `<div class="v-title">${v.type}${v.linkType ? ' <span class="link-badge '+v.linkType+'">'+(v.linkType==='verified'?'مؤكد':'مستنتج')+'</span>' : ''}</div>` : '')}${v.plate ? `<div class="v-row"><span class="v-label">اللوحة:</span><span class="plate-num">${v.plate}</span></div>` : ''}${v.chassis ? `<div class="v-row"><span class="v-label">رقم الهيكل:</span><span class="v-val">${v.chassis}</span></div>` : ''}${v.contract ? `<div class="v-row"><span class="v-label">رقم العقد:</span><span class="v-val">${v.contract}</span></div>` : ''}${v.contracts ? `<div class="v-row"><span class="v-label">العقود:</span><span class="v-val">${v.contracts}</span></div>` : ''}${v.vehicle ? `<div class="v-row"><span class="v-label">المركبة:</span><span class="v-val">${v.vehicle}</span></div>` : ''}${v.ref ? `<div class="v-row"><span class="v-label">المرجع:</span><span class="v-val">${v.ref}</span></div>` : ''}${v.financing ? `<div class="v-row"><span class="v-label">التمويل:</span><span class="v-val">${v.financing}</span></div>` : ''}${v.totalFinancing ? `<div class="v-row"><span class="v-label">إجمالي التمويل:</span><span class="v-val">${v.totalFinancing}</span></div>` : ''}${v.amount ? `<div class="v-row"><span class="v-label">المبلغ:</span><span class="v-val">${v.amount}</span></div>` : ''}${v.supplier ? `<div class="v-row"><span class="v-label">المورد:</span><span class="v-val">${v.supplier}</span></div>` : ''}${v.note ? `<div class="v-note">${v.note}</div>` : ''}</div>`).join('')}</div>` : ''}
         ${c.attachment ? `<div class="attachment-content"><h4 style="color:var(--accent);">المرفق المحلل</h4>${c.attachment}</div>` : ''}
       </div>
     </div>
@@ -1675,25 +1682,32 @@ function renderAnalysis() {
 
   // Fleet Inventory
   document.getElementById('fleetInventory').innerHTML = `
-    <p style="font-size:0.82rem;color:var(--text-secondary);margin-bottom:10px;">جميع المركبات مسجلة باسم <strong>مصرف الراجحي</strong> (المؤجر). حساب العميل: <strong>#24475532</strong>. إجمالي 9 مركبات معروفة في الأسطول.</p>
+    <p style="font-size:0.82rem;color:var(--text-secondary);margin-bottom:10px;">جميع المركبات مسجلة باسم <strong>مصرف الراجحي</strong> (المؤجر). حساب العميل: <strong>#24475532</strong>. إجمالي 16 مركبة في الأسطول.</p>
     <table class="fleet-table">
       <thead>
         <tr><th>#</th><th>المركبة</th><th>السنة</th><th>رقم الهيكل</th><th>العقد</th><th>اللوحة</th><th>القسم</th><th>القسط الشهري (ريال)</th></tr>
       </thead>
       <tbody>
-        <tr><td>1</td><td>Toyota Hiace (فان)</td><td>2023</td><td>JTFLAFCP2P6019105</td><td>48539575</td><td>6231 ب ط أ</td><td>قربان</td><td>4,317</td></tr>
-        <tr><td>2</td><td>Isuzu FVR (شاحنة)</td><td>2023</td><td>RS1P7S139PW001374</td><td>48227691</td><td>5936 ب ط ح</td><td>فريق بابو</td><td>7,117</td></tr>
-        <tr><td>3</td><td>Toyota Hilux (بيك أب)</td><td>2023</td><td>MR0CB9BB1P0067597</td><td>48297704</td><td>5937 ب ط ح</td><td>حسن</td><td>2,843</td></tr>
-        <tr><td>4</td><td>Nissan Urvan</td><td>2023</td><td>JN6CE6BS8P9035498</td><td>49832799</td><td>8065 ب ط ط</td><td>مدى</td><td>3,146</td></tr>
-        <tr><td>5</td><td>Isuzu FVR (شاحنة)</td><td>2023</td><td>RS1P7S134PW002321</td><td>ARBCPO10087013</td><td>4338 ب ع س</td><td>فريق بابو</td><td>7,397</td></tr>
-        <tr><td>6</td><td>Toyota Hiace (فان)</td><td>2023</td><td>JTGHB9CP4P6044037</td><td>48297430</td><td>4623 ب ط س</td><td>العسيمي</td><td>4,535</td></tr>
-        <tr><td>7</td><td>Nissan Urvan</td><td>2023</td><td>JN6CE6BS9P9035459</td><td>49949426</td><td>8060 ب ط ط</td><td>مدى</td><td>3,146</td></tr>
-        <tr><td>8</td><td>Nissan X-Trail</td><td>2024</td><td>--</td><td>--</td><td>1646 ر ك ي</td><td>مجمد</td><td>3,690</td></tr>
-        <tr><td>9</td><td>Isuzu بيك أب دبل كابين</td><td>2023</td><td>--</td><td>--</td><td>8059 ب ط ط</td><td>المدينة</td><td>2,735</td></tr>
-        <tr class="total-row"><td colspan="7" style="text-align:left;"><strong>إجمالي التكلفة الشهرية للأسطول:</strong></td><td><strong>38,926</strong></td></tr>
+        <tr><td>1</td><td>تويوتا هايس (فان)</td><td>2023</td><td>JTFLAFCP2P6019105</td><td>48539575</td><td>ATB 6231</td><td>قربان</td><td>4,317</td></tr>
+        <tr><td>2</td><td>إيسوزو FVR شاحنة (دبل)</td><td>2023</td><td>RS1P7S139PW001374</td><td>48227691</td><td>JTB 5936</td><td>فريق بابو</td><td>7,117</td></tr>
+        <tr><td>3</td><td>تويوتا هايلكس بيك أب (غمارة)</td><td>2023</td><td>MR0CB9BB1P0067597</td><td>48297704</td><td>JTB 5937</td><td>حسن</td><td>2,843</td></tr>
+        <tr><td>4</td><td>سايك موتور MG ZS</td><td>2022</td><td>—</td><td>41524085</td><td>ADR 5788</td><td>فروزن</td><td>2,033</td></tr>
+        <tr><td>5</td><td>نيسان أورفان</td><td>2023</td><td>JN6CE6BS8P9035498</td><td>49832799</td><td>TTB 8065</td><td>مادا</td><td>3,146</td></tr>
+        <tr><td>6</td><td>إيسوزو شاحنة</td><td>2025</td><td>—</td><td>أسطول (مايو 2025)</td><td>LEB 4314</td><td>فروزن</td><td>3,807</td></tr>
+        <tr><td>7</td><td>إيسوزو REWARD</td><td>2025</td><td>—</td><td>أسطول (مايو 2025)</td><td>LEB 4315</td><td>مادا</td><td>3,586</td></tr>
+        <tr><td>8</td><td>إيسوزو شاحنة</td><td>2023</td><td>RS1P7S134PW002321</td><td>ARBCPO10087013</td><td>SEB 4338</td><td>فريق بابو</td><td>7,397</td></tr>
+        <tr><td>9</td><td>تويوتا هايس (فان)</td><td>2023</td><td>JTGHB9CP4P6044037</td><td>48297430</td><td>STB 4623</td><td>عسيمي</td><td>4,535</td></tr>
+        <tr><td>10</td><td>نيسان أورفان</td><td>2023</td><td>JN6CE6BS9P9035459</td><td>49949426</td><td>TTB 8060</td><td>مادا</td><td>3,146</td></tr>
+        <tr><td>11</td><td>إيسوزو شاحنة</td><td>2022</td><td>—</td><td>41524280</td><td>TXB 3263</td><td>فروزن</td><td>3,197</td></tr>
+        <tr><td>12</td><td>تويوتا RAV4</td><td>2025</td><td>—</td><td>أسطول (مايو 2025)</td><td>GUR 1513</td><td>عسيمي</td><td>3,807</td></tr>
+        <tr><td>13</td><td>إيسوزو REWARD</td><td>2025</td><td>—</td><td>أسطول (مايو 2025)</td><td>LEB 4313</td><td>فريق بابو</td><td>4,064</td></tr>
+        <tr><td>14</td><td>نيسان إكس تريل</td><td>2024</td><td>—</td><td>أسطول</td><td>VKR 1646</td><td>فروزن</td><td>3,690</td></tr>
+        <tr><td>15</td><td>شانجان CS95</td><td>2023</td><td>—</td><td>41523266</td><td>ADR 8650</td><td>المدينة</td><td>3,215</td></tr>
+        <tr><td>16</td><td>إيسوزو بيك أب (غمارتين)</td><td>2023</td><td>—</td><td>غير معروف</td><td>TTB 8059</td><td>المدينة</td><td>2,735</td></tr>
+        <tr class="total-row"><td colspan="7" style="text-align:left;"><strong>إجمالي التكلفة الشهرية للأسطول:</strong></td><td><strong>62,635</strong></td></tr>
       </tbody>
     </table>
-    <p style="font-size:0.76rem;color:var(--text-muted);margin-top:8px;">ملاحظة: جميع المركبات مسجلة باسم مصرف الراجحي كمؤجر (مرابحة / تمويل أسطول). الإجمالي الشهري ~38,926 ريال.</p>
+    <p style="font-size:0.76rem;color:var(--text-muted);margin-top:8px;">ملاحظة: جميع المركبات مسجلة باسم مصرف الراجحي كمؤجر (مرابحة / تمويل أسطول). الإجمالي الشهري ~62,635 ريال. إجمالي المحفظة: ~3,006,480 ريال.</p>
   `;
 }
 
@@ -1710,7 +1724,7 @@ function renderGroups() {
         <p>إجمالي المتبقي: <span class="amount">${fmtSAR(CASES.filter(c=>c.creditorGroup==='rajhi').reduce((s,c)=>s+c.amountRemaining,0))}</span></p>
         <p>النطاق الزمني للسندات: يونيو 2022 - مايو 2025 | المحاكم: جدة + الرياض + المدينة</p>
         <p><strong>توصية:</strong> تفاوض موحد مع إدارة التحصيل بالراجحي لتسوية شاملة بخصم كبير</p>
-        <p style="margin-top:8px;padding:8px 12px;background:linear-gradient(135deg,#f0f5fa,#e8eff8);border:1px solid #b0c8e0;border-radius:4px;font-size:0.82rem;">&#x1F69B; <strong>ارتباط الأسطول:</strong> جميع قضايا الراجحي مرتبطة بتمويل أسطول مركبات (9+ مركبات). العميل #24475532 = حساب عميل الأسطول.<br>يشمل الأسطول: شاحنات Isuzu FVR، بيك أب Toyota Hilux، فان Toyota Hiace، Nissan Urvan، Nissan X-Trail</p>
+        <p style="margin-top:8px;padding:8px 12px;background:linear-gradient(135deg,#f0f5fa,#e8eff8);border:1px solid #b0c8e0;border-radius:4px;font-size:0.82rem;">&#x1F69B; <strong>ارتباط الأسطول:</strong> جميع قضايا الراجحي مرتبطة بتمويل أسطول مركبات (16 مركبة). العميل #24475532 = حساب عميل الأسطول.<br>يشمل الأسطول: شاحنات إيسوزو، بيك أب تويوتا هايلكس، فان تويوتا هايس، نيسان أورفان، نيسان إكس تريل، سايك موتور MG ZS، تويوتا RAV4، شانجان CS95، إيسوزو REWARD</p>
         <div class="cases-list-inline">
           ${CASES.filter(c=>c.creditorGroup==='rajhi').map(c=>`<span class="case-tag">${c.caseNum.slice(-6)}</span>`).join('')}
         </div>
@@ -1801,6 +1815,8 @@ function renderTimeline() {
 // ===== VEHICLES TAB =====
 function renderVehicles() {
   const totalMonthly = FLEET_VEHICLES.reduce((s, v) => s + v.installment, 0);
+  const totalPortfolio = FLEET_VEHICLES.reduce((s, v) => s + v.totalRepay, 0);
+  const depts = new Set(FLEET_VEHICLES.map(v => v.dept));
   const linkedCaseNums = new Set();
   FLEET_VEHICLES.forEach(v => v.linkedCases.forEach(cn => linkedCaseNums.add(cn)));
   const linkedCasesArr = CASES.filter(c => linkedCaseNums.has(c.caseNum));
@@ -1812,8 +1828,12 @@ function renderVehicles() {
       <h3>\u{1F69B} نظرة عامة على الأسطول</h3>
       <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:16px;">جميع المركبات مسجلة باسم غدير خالد عبدالعزيز الحساوي / مؤسسة غدير الشرق التجارية</p>
       <div class="stats-grid" style="margin:0 0 20px;">
-        <div class="stat-card"><div class="label">إجمالي المركبات</div><div class="value">${FLEET_VEHICLES.length}</div></div>
-        <div class="stat-card yellow"><div class="label">التكلفة الشهرية</div><div class="value">${fmt(totalMonthly)} SAR</div></div>
+        <div class="stat-card"><div class="label">إجمالي المركبات</div><div class="value">16</div></div>
+        <div class="stat-card yellow"><div class="label">التكلفة الشهرية</div><div class="value">62,635 SAR</div></div>
+        <div class="stat-card blue"><div class="label">إجمالي المحفظة</div><div class="value">3,006,480 SAR</div></div>
+        <div class="stat-card red"><div class="label">الأقسام</div><div class="value">7</div></div>
+      </div>
+      <div class="stats-grid" style="margin:0 0 20px;">
         <div class="stat-card blue"><div class="label">القضايا المرتبطة</div><div class="value">${linkedCasesArr.length}</div></div>
         <div class="stat-card red"><div class="label">إجمالي المطالبات</div><div class="value">${fmtSAR(totalClaimed)}</div><div class="sub">المتبقي: ${fmtSAR(totalRemaining)}</div></div>
       </div>
@@ -1833,12 +1853,19 @@ function renderVehicles() {
         </h4>
         <div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:10px;">
           <div class="v-row"><span class="v-label">اللوحة:</span><span class="plate-num">${v.plate}</span></div>
+          <div class="v-row"><span class="v-label">اللوحة (EN):</span><span class="v-val">${v.plateEn}</span></div>
           <div class="v-row"><span class="v-label">رقم الهيكل:</span><span class="v-val">${v.chassis}</span></div>
           <div class="v-row"><span class="v-label">رقم العقد:</span><span class="v-val">${v.contract}</span></div>
         </div>
         <div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:10px;">
           <div class="v-row"><span class="v-label">القسط الشهري:</span><span class="v-val" style="color:var(--red);font-weight:700;">${fmt(v.installment)} SAR</span></div>
+          <div class="v-row"><span class="v-label">إجمالي السداد:</span><span class="v-val">${fmt(v.totalRepay)} SAR</span></div>
+          <div class="v-row"><span class="v-label">يوم الخصم:</span><span class="v-val">${v.deductDay}</span></div>
           <div class="v-row"><span class="v-label">التمويل:</span><span class="v-val">${v.financing}</span></div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:10px;">
+          <div class="v-row"><span class="v-label">أول قسط:</span><span class="v-val">${v.firstInst}</span></div>
+          <div class="v-row"><span class="v-label">آخر قسط:</span><span class="v-val">${v.lastInst}</span></div>
           <div class="v-row"><span class="v-label">القسم:</span><span class="v-val">${v.dept}</span></div>
         </div>
         ${cases.length > 0 ? `
@@ -1849,7 +1876,7 @@ function renderVehicles() {
               ${cases.map(c => `<span class="case-tag" style="font-size:0.7rem;padding:2px 6px;background:var(--surface-alt);border:1px solid var(--border);border-radius:3px;font-family:monospace;">#${c.caseNum}</span>`).join('')}
             </div>
           </div>
-        ` : '<div style="font-size:0.78rem;color:var(--text-muted);margin-top:6px;">بدون قضايا مرتبطة</div>'}
+        ` : '<div style="font-size:0.78rem;color:#999;margin-top:6px;">لا توجد قضايا مرفوعة</div>'}
       </div>
     `;
   });
