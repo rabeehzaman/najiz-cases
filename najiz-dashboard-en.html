@@ -1335,14 +1335,17 @@ const FLEET_VEHICLES = [
   { id:3, make:"Toyota", model:"Hilux Pickup (Single Cab)", year:2023, color:"White", chassis:"MR0CB9BB1P0067597", contract:"48297704", plate:"5937 ب ط ح", plateEn:"JTB 5937", dept:"Hassan", installment:2843, totalRepay:136464, deductDay:"6th", firstInst:"10/6/23", lastInst:"10/6/27", financing:"93,804 SAR", icon:"🛻", linkedCases:["401014704105695","401014704105693"], linkType:"verified" },
   { id:4, make:"SAIC Motor", model:"MG ZS", year:2022, color:"Black", chassis:"—", contract:"41524085", plate:"5788 ر د أ", plateEn:"ADR 5788", dept:"Frozen", installment:2033, totalRepay:97584, deductDay:"6th", firstInst:"10/5/22", lastInst:"9/5/26", financing:"71,783 SAR", icon:"🚙", linkedCases:["401014704115805"], linkType:"verified" },
   { id:5, make:"Nissan", model:"Urvan", year:2023, color:"White", chassis:"JN6CE6BS8P9035498", contract:"49832799", plate:"8065 ب ط ط", plateEn:"TTB 8065", dept:"Mada", installment:3146, totalRepay:151008, deductDay:"6th", firstInst:"9/6/23", lastInst:"9/6/27", financing:"—", icon:"🚐", linkedCases:["401014704095086","401014704095088"], linkType:"verified" },
-  { id:6, make:"Isuzu", model:"Truck", year:2025, color:"White", chassis:"—", contract:"ARB-000000100372-FLEET", plate:"4314 ب ع ل", plateEn:"LEB 4314", dept:"Frozen", installment:3807, totalRepay:182736, deductDay:"15th", firstInst:"5/14/25", lastInst:"5/14/29", financing:"480,175 SAR (4 vehicles)", icon:"🚛", linkedCases:["401014704178780","401014704178773","401014704100344"], linkType:"verified" },
-  { id:7, make:"Isuzu", model:"REWARD", year:2025, color:"White", chassis:"—", contract:"ARB-000000100372-FLEET", plate:"4315 ب ع ل", plateEn:"LEB 4315", dept:"Mada", installment:3586, totalRepay:172128, deductDay:"14th", firstInst:"5/14/25", lastInst:"5/14/29", financing:"480,175 SAR (4 vehicles)", icon:"🚛", linkedCases:["401014704178780","401014704178773","401014704100344"], linkType:"verified" },
+  { id:6, isGroup:true, groupName:"Fleet Contract ARB-000000100372-FLEET", contract:"ARB-000000100372-FLEET", contractDate:"2025-05-14", financing:"480,175 SAR", totalInstallment:15264, totalRepay:732672, icon:"🚛", linkedCases:["401014704178780","401014704178773","401014704100344"], linkType:"verified", note:"Early termination — profit calculated only to termination date, not full 48mo. Promissory notes total 523,244 SAR (principal + partial profit).",
+    subVehicles:[
+      {make:"Isuzu", model:"Truck", year:2025, color:"White", plateEn:"LEB 4314", plate:"4314 ب ع ل", dept:"Frozen", installment:3807, totalRepay:182736, deductDay:"15th", firstInst:"5/14/25", lastInst:"5/14/29"},
+      {make:"Isuzu", model:"REWARD", year:2025, color:"White", plateEn:"LEB 4315", plate:"4315 ب ع ل", dept:"Mada", installment:3586, totalRepay:172128, deductDay:"14th", firstInst:"5/14/25", lastInst:"5/14/29"},
+      {make:"Toyota", model:"RAV4", year:2025, color:"White", plateEn:"GUR 1513", plate:"1513 ر و ق", dept:"Osaimi", installment:3807, totalRepay:182736, deductDay:"15th", firstInst:"5/14/25", lastInst:"5/14/29"},
+      {make:"Isuzu", model:"REWARD", year:2025, color:"White", plateEn:"LEB 4313", plate:"4313 ب ع ل", dept:"Team Babu", installment:4064, totalRepay:195072, deductDay:"14th", firstInst:"5/14/25", lastInst:"5/14/29"}
+    ]},
   { id:8, make:"Isuzu", model:"Truck", year:2023, color:"White", chassis:"RS1P7S134PW002321", contract:"ARBCPO10087013", plate:"4338 ب ع س", plateEn:"SEB 4338", dept:"Team Babu", installment:7397, totalRepay:355056, deductDay:"9th", firstInst:"10/9/24", lastInst:"10/9/28", financing:"384,654 SAR (fleet)", icon:"🚛", linkedCases:["401014704098768","401014704098777","401014704098786"], linkType:"inferred" },
   { id:9, make:"Toyota", model:"Hiace (Van)", year:2023, color:"White", chassis:"JTGHB9CP4P6044037", contract:"48297430", plate:"4623 ب ط س", plateEn:"STB 4623", dept:"Osaimi", installment:4535, totalRepay:217680, deductDay:"6th", firstInst:"10/6/23", lastInst:"10/6/27", financing:"—", icon:"🚐", linkedCases:[], linkType:"none" },
   { id:10, make:"Nissan", model:"Urvan", year:2023, color:"White", chassis:"JN6CE6BS9P9035459", contract:"49949426", plate:"8060 ب ط ط", plateEn:"TTB 8060", dept:"Mada", installment:3146, totalRepay:151008, deductDay:"6th", firstInst:"9/6/23", lastInst:"9/6/27", financing:"—", icon:"🚐", linkedCases:["401014704104403","401014704104400"], linkType:"inferred" },
   { id:11, make:"Isuzu", model:"Truck", year:2022, color:"White", chassis:"—", contract:"41524280", plate:"3263 ب ص ط", plateEn:"TXB 3263", dept:"Frozen", installment:3197, totalRepay:153456, deductDay:"6th", firstInst:"10/5/22", lastInst:"9/5/26", financing:"112,838 SAR", icon:"🚛", linkedCases:[], linkType:"none" },
-  { id:12, make:"Toyota", model:"RAV4", year:2025, color:"White", chassis:"—", contract:"ARB-000000100372-FLEET", plate:"1513 ر و ق", plateEn:"GUR 1513", dept:"Osaimi", installment:3807, totalRepay:182736, deductDay:"15th", firstInst:"5/14/25", lastInst:"5/14/29", financing:"480,175 SAR (4 vehicles)", icon:"🚙", linkedCases:["401014704178780","401014704178773","401014704100344"], linkType:"verified" },
-  { id:13, make:"Isuzu", model:"REWARD", year:2025, color:"White", chassis:"—", contract:"ARB-000000100372-FLEET", plate:"4313 ب ع ل", plateEn:"LEB 4313", dept:"Team Babu", installment:4064, totalRepay:195072, deductDay:"14th", firstInst:"5/14/25", lastInst:"5/14/29", financing:"480,175 SAR (4 vehicles)", icon:"🚛", linkedCases:["401014704178780","401014704178773","401014704100344"], linkType:"verified" },
   { id:14, make:"Nissan", model:"X-Trail", year:2024, color:"Black", chassis:"—", contract:"Fleet", plate:"1646 ر ك ي", plateEn:"VKR 1646", dept:"Frozen", installment:3690, totalRepay:177120, deductDay:"8th", firstInst:"10/9/24", lastInst:"10/9/28", financing:"—", icon:"🚙", linkedCases:[], linkType:"none" },
   { id:15, make:"Changan", model:"CS95", year:2023, color:"White", chassis:"—", contract:"41523266", plate:"8650 ر د أ", plateEn:"ADR 8650", dept:"Madinah", installment:3215, totalRepay:154320, deductDay:"6th", firstInst:"10/5/22", lastInst:"9/5/26", financing:"113,500 SAR", icon:"🚙", linkedCases:[], linkType:"none" },
   { id:16, make:"Isuzu", model:"Pickup (Double Cab)", year:2023, color:"White", chassis:"—", contract:"Unknown", plate:"8059 ب ط ط", plateEn:"TTB 8059", dept:"Madinah", installment:2735, totalRepay:131280, deductDay:"6th", firstInst:"7/6/23", lastInst:"7/6/27", financing:"—", icon:"🛻", linkedCases:["401014704091030"], linkType:"inferred" }
@@ -1891,71 +1894,105 @@ document.getElementById('searchBox').addEventListener('input', (e) => {
 // ===== VEHICLES TAB =====
 function renderVehicles() {
   const container = document.getElementById('vehiclesList');
-  const totalMonthly = FLEET_VEHICLES.reduce((s,v) => s + v.installment, 0);
+  const totalMonthly = FLEET_VEHICLES.reduce((s,v) => s + (v.isGroup ? v.totalInstallment : v.installment), 0);
 
   let html = `<div style="background:var(--surface);border-radius:8px;padding:16px;margin-bottom:16px;border:1px solid var(--border)">
     <h3 style="margin-bottom:8px">Fleet Overview</h3>
     <p style="font-size:0.85rem;color:var(--text-secondary)">All vehicles registered under <strong>Al Rajhi Bank</strong> (lessor), leased to \u0645\u0624\u0633\u0633\u0629 \u063a\u062f\u064a\u0631 \u0627\u0644\u0634\u0631\u0642 \u0627\u0644\u062a\u062c\u0627\u0631\u064a\u0629. Customer #24475532.</p>
-    <p style="margin-top:8px"><strong>Total Vehicles:</strong> ${FLEET_VEHICLES.length} | <strong>Total Monthly Cost:</strong> ${totalMonthly.toLocaleString()} SAR | <strong>Total Portfolio:</strong> ${FLEET_VEHICLES.reduce((s,v) => s + v.totalRepay, 0).toLocaleString()} SAR | <strong>Departments:</strong> ${[...new Set(FLEET_VEHICLES.map(v=>v.dept))].length}</p>
+    <p style="margin-top:8px"><strong>Total Vehicles:</strong> 16 | <strong>Total Monthly Cost:</strong> 62,635 SAR | <strong>Total Portfolio:</strong> 3,006,480 SAR | <strong>Departments:</strong> 7</p>
   </div>`;
 
-  FLEET_VEHICLES.forEach(v => {
-    const badge = v.linkType === 'verified' ? '<span class="link-badge verified">Verified Link</span>'
-                : v.linkType === 'inferred' ? '<span class="link-badge inferred">Inferred Link</span>'
-                : '<span class="link-badge" style="background:#f5f5f5;color:#999;border:1px solid #ddd">No Case Link</span>';
-
-    const linkedCaseData = v.linkedCases.map(cn => CASES.find(c => c.caseNum === cn)).filter(Boolean);
+  function buildCasesHtml(linkedCases) {
+    const linkedCaseData = linkedCases.map(cn => CASES.find(c => c.caseNum === cn)).filter(Boolean);
+    if (linkedCaseData.length === 0 && linkedCases.length === 0)
+      return `<div style="margin-top:12px;border-top:1px solid var(--border);padding-top:10px"><span style="font-size:0.8rem;color:#999">No cases filed</span></div>`;
+    if (linkedCaseData.length === 0) return '';
     const totalClaimed = linkedCaseData.reduce((s,c) => s + c.amountClaimed, 0);
     const totalRemaining = linkedCaseData.reduce((s,c) => s + c.amountRemaining, 0);
+    return `<div style="margin-top:12px;border-top:1px solid var(--border);padding-top:10px">
+      <strong style="font-size:0.8rem;color:var(--text-secondary)">Linked Cases (${linkedCaseData.length}):</strong>
+      <div style="display:flex;flex-direction:column;gap:6px;margin-top:6px">
+        ${linkedCaseData.map(c => {
+          const sc = c.status==='active'?'red':c.status==='completed'?'green':'gray';
+          return `<div style="display:flex;align-items:center;gap:10px;padding:6px 10px;background:var(--bg);border-radius:6px;font-size:0.8rem">
+            <span style="font-weight:600">#${c.caseNum.slice(-6)}</span>
+            <span class="status-badge ${sc}" style="font-size:0.68rem">${c.statusAr}</span>
+            <span style="flex:1"></span>
+            <span style="font-weight:600">${fmtSAR(c.amountRemaining)}</span>
+          </div>`;}).join('')}
+      </div>
+      <div style="margin-top:8px;font-size:0.78rem;color:var(--text-secondary)">
+        Total Claimed: <strong>${fmtSAR(totalClaimed)}</strong> | Remaining: <strong style="color:var(--red)">${fmtSAR(totalRemaining)}</strong>
+      </div>
+    </div>`;
+  }
 
-    let casesHtml = '';
-    if (linkedCaseData.length === 0 && v.linkedCases.length === 0) {
-      casesHtml = `<div style="margin-top:12px;border-top:1px solid var(--border);padding-top:10px">
-        <span style="font-size:0.8rem;color:#999">No cases filed</span>
+  FLEET_VEHICLES.forEach(v => {
+    const badge = v.linkType==='verified'?'<span class="link-badge verified">Verified Link</span>'
+                : v.linkType==='inferred'?'<span class="link-badge inferred">Inferred Link</span>'
+                : '<span class="link-badge" style="background:#f5f5f5;color:#999;border:1px solid #ddd">No Case Link</span>';
+
+    if (v.isGroup) {
+      // Grouped vehicle card (e.g. fleet contract with multiple vehicles)
+      const subRows = v.subVehicles.map(sv =>
+        `<div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--bg);border-radius:6px;font-size:0.82rem;flex-wrap:wrap">
+          <span style="font-size:1.2rem">${sv.make.includes('Toyota')?'🚙':'🚛'}</span>
+          <strong>${sv.make} ${sv.model} ${sv.year}</strong>
+          <span class="plate-num" style="font-size:0.9rem">${sv.plateEn}</span>
+          <span style="color:var(--text-muted);font-size:0.75rem">${sv.plate}</span>
+          <span style="flex:1"></span>
+          <span style="font-size:0.78rem">Dept: <strong>${sv.dept}</strong></span>
+          <span style="font-size:0.78rem">${sv.installment.toLocaleString()} SAR/mo</span>
+        </div>`).join('');
+
+      html += `<div style="background:var(--surface);border-radius:8px;padding:16px;margin-bottom:12px;border:2px solid var(--accent);box-shadow:var(--shadow-lg)">
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px">
+          <span style="font-size:2rem">${v.icon}</span>
+          <div style="flex:1;min-width:200px">
+            <div style="font-weight:700;font-size:1.05rem">${v.groupName}</div>
+            <div style="font-size:0.8rem;color:var(--text-secondary)">Contract Date: ${v.contractDate} | ${v.subVehicles.length} vehicles under single contract</div>
+          </div>
+          ${badge}
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-bottom:12px;font-size:0.8rem;padding:10px;background:var(--surface-alt);border-radius:6px">
+          <div><span style="color:var(--text-muted)">Contract:</span> <strong>${v.contract}</strong></div>
+          <div><span style="color:var(--text-muted)">Financing:</span> <strong>${v.financing}</strong></div>
+          <div><span style="color:var(--text-muted)">Combined Monthly:</span> <strong>${v.totalInstallment.toLocaleString()} SAR/mo</strong></div>
+          <div><span style="color:var(--text-muted)">Total Repay (48mo):</span> <strong>${v.totalRepay.toLocaleString()} SAR</strong></div>
+        </div>
+        ${v.note ? `<div style="padding:8px 12px;background:#fff8e1;border:1px solid #ffe082;border-radius:6px;font-size:0.78rem;color:#6d4c00;margin-bottom:12px"><strong>Note:</strong> ${v.note}</div>` : ''}
+        <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:4px">
+          <strong style="font-size:0.82rem;color:var(--text-secondary)">Vehicles in this contract:</strong>
+          ${subRows}
+        </div>
+        ${buildCasesHtml(v.linkedCases)}
       </div>`;
-    } else if (linkedCaseData.length > 0) {
-      casesHtml = `<div style="margin-top:12px;border-top:1px solid var(--border);padding-top:10px">
-        <strong style="font-size:0.8rem;color:var(--text-secondary)">Linked Cases (${linkedCaseData.length}):</strong>
-        <div style="display:flex;flex-direction:column;gap:6px;margin-top:6px">
-          ${linkedCaseData.map(c => {
-            const statusClass = c.status === 'active' ? 'red' : c.status === 'completed' ? 'green' : 'gray';
-            return `<div style="display:flex;align-items:center;gap:10px;padding:6px 10px;background:var(--bg);border-radius:6px;font-size:0.8rem">
-              <span style="font-weight:600">#${c.caseNum.slice(-6)}</span>
-              <span class="status-badge ${statusClass}" style="font-size:0.68rem">${c.statusAr}</span>
-              <span style="flex:1"></span>
-              <span style="font-weight:600">${fmtSAR(c.amountRemaining)}</span>
-            </div>`;
-          }).join('')}
+    } else {
+      // Single vehicle card
+      html += `<div style="background:var(--surface);border-radius:8px;padding:16px;margin-bottom:12px;border:1px solid var(--border);box-shadow:var(--shadow)">
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+          <span style="font-size:2rem">${v.icon}</span>
+          <div style="flex:1;min-width:200px">
+            <div style="font-weight:700;font-size:1rem">${v.make} ${v.model} ${v.year}</div>
+            <div style="font-size:0.8rem;color:var(--text-secondary)">${v.color} | Dept: ${v.dept}</div>
+          </div>
+          <span class="plate-num" style="font-size:1.1rem;font-weight:800;letter-spacing:1px">${v.plateEn}</span>
+          <span class="plate-num" style="font-size:0.85rem">${v.plate}</span>
+          ${badge}
         </div>
-        <div style="margin-top:8px;font-size:0.78rem;color:var(--text-secondary)">
-          Total Claimed: <strong>${fmtSAR(totalClaimed)}</strong> | Remaining: <strong style="color:var(--red)">${fmtSAR(totalRemaining)}</strong>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;margin-top:12px;font-size:0.8rem">
+          <div><span style="color:var(--text-muted)">Chassis:</span> <strong>${v.chassis}</strong></div>
+          <div><span style="color:var(--text-muted)">Contract:</span> <strong>${v.contract}</strong></div>
+          <div><span style="color:var(--text-muted)">Installment:</span> <strong>${v.installment.toLocaleString()} SAR/mo</strong></div>
+          <div><span style="color:var(--text-muted)">Total Repay:</span> <strong>${v.totalRepay.toLocaleString()} SAR</strong></div>
+          <div><span style="color:var(--text-muted)">Deduction Day:</span> <strong>${v.deductDay}</strong></div>
+          <div><span style="color:var(--text-muted)">First Inst.:</span> <strong>${v.firstInst}</strong></div>
+          <div><span style="color:var(--text-muted)">Last Inst.:</span> <strong>${v.lastInst}</strong></div>
+          <div><span style="color:var(--text-muted)">Financing:</span> <strong>${v.financing}</strong></div>
         </div>
+        ${buildCasesHtml(v.linkedCases)}
       </div>`;
     }
-
-    html += `<div style="background:var(--surface);border-radius:8px;padding:16px;margin-bottom:12px;border:1px solid var(--border);box-shadow:var(--shadow)">
-      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-        <span style="font-size:2rem">${v.icon}</span>
-        <div style="flex:1;min-width:200px">
-          <div style="font-weight:700;font-size:1rem">${v.make} ${v.model} ${v.year}</div>
-          <div style="font-size:0.8rem;color:var(--text-secondary)">${v.color} | Dept: ${v.dept}</div>
-        </div>
-        <span class="plate-num" style="font-size:1.1rem;font-weight:800;letter-spacing:1px">${v.plateEn}</span>
-        <span class="plate-num" style="font-size:0.85rem">${v.plate}</span>
-        ${badge}
-      </div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;margin-top:12px;font-size:0.8rem">
-        <div><span style="color:var(--text-muted)">Chassis:</span> <strong>${v.chassis}</strong></div>
-        <div><span style="color:var(--text-muted)">Contract:</span> <strong>${v.contract}</strong></div>
-        <div><span style="color:var(--text-muted)">Installment:</span> <strong>${v.installment.toLocaleString()} SAR/mo</strong></div>
-        <div><span style="color:var(--text-muted)">Total Repay:</span> <strong>${v.totalRepay.toLocaleString()} SAR</strong></div>
-        <div><span style="color:var(--text-muted)">Deduction Day:</span> <strong>${v.deductDay}</strong></div>
-        <div><span style="color:var(--text-muted)">First Inst.:</span> <strong>${v.firstInst}</strong></div>
-        <div><span style="color:var(--text-muted)">Last Inst.:</span> <strong>${v.lastInst}</strong></div>
-        <div><span style="color:var(--text-muted)">Financing:</span> <strong>${v.financing}</strong></div>
-      </div>
-      ${casesHtml}
-    </div>`;
   });
 
   container.innerHTML = html;
